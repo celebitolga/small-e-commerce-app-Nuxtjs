@@ -20,9 +20,7 @@ export default {
     }
   },
   created() {
-    this.$axios.get("/").then((response) => {
-      this.products = response.data.products;
-    });
+    this.products = this.$store.getters.getProducts;
   },
   components: {
     Categories,

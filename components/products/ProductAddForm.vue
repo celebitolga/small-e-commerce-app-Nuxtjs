@@ -76,12 +76,12 @@ export default {
   methods: {
     addProduct() {
       if(this.valid()) {
-        this.$axios.post('/admin/add-product', { product: this.product })
-          .then((response) => {
-            console.log(response.data.message);
+        this.$store.dispatch("addProduct", this.product)
+          .then(() => {
+            this.$router.push('/');
           })
       } else {
-        alert("Boş bırakma")
+        alert("Boş bırakma");
       }
     },
     valid() {

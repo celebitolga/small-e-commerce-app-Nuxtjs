@@ -11,11 +11,6 @@ export default {
   head: {
     title: 'Admin Add Product',
   },
-  created() {
-    // this.$axios.get('/users').then((response) => {
-    //   console.log(response.data);
-    // })
-  },
   components: {
     Categories,
     ProductAddForm,
