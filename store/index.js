@@ -25,6 +25,13 @@ export const actions = {
       //commit('setProducts', response.data.products)
     });
   },
+  getAdminProducts({ commit }) {
+    return this.$axios.get("/admin/products").then((response) => {
+      //response.data.title
+      //console.log(response.data);
+      //commit('setProducts', response.data.products)
+    });
+  },
   addProduct({ commit }, product) {
     return this.$axios.post('/admin/add-product', { product })
       .then((response) => {

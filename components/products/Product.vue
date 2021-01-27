@@ -4,13 +4,13 @@
       <img :src="product.imageUrl" :alt="product.name" :title="product.name" class="card-img-top product-image" />
       <div class="card-body">
         <h4 class="card-title">
-          <a href="/">{{product.name}} </a>
+          <nuxt-link tag="a" to="/"> {{product.name}} </nuxt-link>
         </h4>
         <p class="card-text pt-2">{{product.description}}</p>
       </div>
       <div class="card-footer">
         <small class="text-muted"> {{product.price}} </small>
-        <a href="/" class="btn btn-secondary btn-sm float-right"> {{product.description}} </a>
+        <nuxt-link tag="a" to="/" class="btn btn-outline-primary btn-sm float-right"> Add to Cart </nuxt-link>
       </div>
     </div>
   </div>

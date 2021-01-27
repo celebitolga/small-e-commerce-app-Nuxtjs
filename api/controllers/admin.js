@@ -33,7 +33,7 @@ editProduct = (req, res, next) => {
 }
 
 module.exports = {
-  addProduct,
   getProducts,
+  addProduct,
   editProduct,
 }
