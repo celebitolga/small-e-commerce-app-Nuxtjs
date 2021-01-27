@@ -15,7 +15,7 @@
           <td> {{product.name}} </td>
           <td> {{product.price}} TL</td>
           <td>
-            <nuxt-link tag="a" class="btn btn-primary btn-sm" to="/admin/edit/1">Edit</nuxt-link>
+            <nuxt-link tag="a" class="btn btn-primary btn-sm" :to="'/admin/edit-product/' + product._id">Edit</nuxt-link>
           </td>
         </tr>
       </tbody>

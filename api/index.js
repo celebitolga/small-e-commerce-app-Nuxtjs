@@ -15,7 +15,7 @@ app.use(shopRoutes);
 
 
 app.get('*', (req, res) => {
-  console.log('BAD Request');
+  console.log('404 Not Found');
   res.status(404);
 })
 

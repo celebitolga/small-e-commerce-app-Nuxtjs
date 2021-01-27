@@ -12,6 +12,7 @@ export const actions = {
   nuxtServerInit({ commit }, context) {
     return context.$axios.get("/").then((response) => {
       //response.data.title
+      //console.log(response.data.products);
       commit('setProducts',response.data.products)
     });
   },
