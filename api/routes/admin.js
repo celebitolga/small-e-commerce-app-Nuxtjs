@@ -12,6 +12,9 @@ const adminController = require('../controllers/admin')
 // /admin/products
 router.get('/products', adminController.getProducts);
 
+// /admin/getAdminProduct
+router.get('/getAdminProduct/:_id', adminController.getAdminProduct);
+
  // /admin/add-product => POST
 router.post('/add-product', adminController.addProduct);
 

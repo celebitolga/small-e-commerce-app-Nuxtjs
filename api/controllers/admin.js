@@ -9,6 +9,25 @@ getProducts = (req, res, next) => {
   })
 }
 
+getAdminProduct = (req, res, next) => {
+  console.log("Get Admin product By Id");
+  let _id = req.params._id;
+  const product = Product.getProduct(_id);
+  if (product) {
+    res.status(200).json({
+      title: 'Product Detail',
+      product: {
+        ...product
+      }
+    })
+  } else {
+    console.log('BAD Request');
+    res.status(200).json({
+      err: "Not Found",
+    })
+  }
+}
+
 addProduct = (req, res, next) => {
   console.log("Admin new product");
   const product = new Product(
@@ -34,6 +53,7 @@ editProduct = (req, res, next) => {
 
 module.exports = {
   getProducts,
+  getAdminProduct,
   addProduct,
   editProduct,
 }
