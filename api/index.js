@@ -5,27 +5,18 @@ const app = express();
 app.use(bodyParser.json())
 
 //require routes
-const adminRoutes = require('./admin/admin');
-const userRoutes = require('./users/users');
+const adminRoutes = require('./routes/admin');
+const shopRoutes = require('./routes/shop');
+
 //İmport routes
-app.use('/admin', adminRoutes.router);
-app.use('/users', userRoutes);
+app.use('/admin', adminRoutes);
+app.use(shopRoutes);
 
-// Products
-const products = adminRoutes.products;
 
-app.get("/", (req, res) => {
-  console.log("İstek geldi");
-  
-  res.status(200).json({
-    products,
-  })
-});
 
 app.get('*', (req, res) => {
   console.log('BAD Request');
   res.status(404);
 })
-
 
 module.exports = app;

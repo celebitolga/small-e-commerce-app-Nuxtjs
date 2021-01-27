@@ -1,4 +1,4 @@
-# deneme
+# Small e-commerce app with Nuxtjs
 
 ## Build Setup
 

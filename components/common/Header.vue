@@ -11,7 +11,16 @@
           <nuxt-link tag="a" to="/products" class="nav-link" exact-active-class="active">Products</nuxt-link>
         </li>
         <li class="nav-item">
+          <nuxt-link tag="a" to="/cart" class="nav-link" exact-active-class="active">Cart</nuxt-link>
+        </li>
+        <li class="nav-item">
+          <nuxt-link tag="a" to="/orders" class="nav-link" exact-active-class="active">Orders</nuxt-link>
+        </li>
+        <li class="nav-item">
           <nuxt-link tag="a" to="/admin/add-product" class="nav-link" exact-active-class="active">Add Product</nuxt-link>
+        </li>
+        <li class="nav-item">
+          <nuxt-link tag="a" to="/admin/products" class="nav-link" exact-active-class="active">Admin Products</nuxt-link>
         </li>
       </ul>
 

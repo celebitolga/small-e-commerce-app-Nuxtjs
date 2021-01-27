@@ -1,7 +1,7 @@
 <template>
   <div class="col-md-4">
     <div class="card my-3">
-      <img :src="product.image" :alt="product.name" :title="product.name" class="card-img-top product-image" />
+      <img :src="product.imageUrl" :alt="product.name" :title="product.name" class="card-img-top product-image" />
       <div class="card-body">
         <h4 class="card-title">
           <a href="/">{{product.name}} </a>

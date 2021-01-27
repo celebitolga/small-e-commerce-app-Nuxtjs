@@ -26,10 +26,10 @@
     </div>
 
     <div class="form-group row">
-      <label class="col-sm-2 col-form-label">Product Image Url</label>
+      <label class="col-sm-2 col-form-label">Product ImageUrl</label>
       <div class="col-sm-10">
         <input
-          v-model="product.image"
+          v-model="product.imageUrl"
           type="text"
           class="form-control"
           placeholder="Product Image"
@@ -68,7 +68,7 @@ export default {
       product: {
         name: '',
         price: '',
-        image: '',
+        imageUrl: '',
         description: '',
       }
     }
@@ -85,7 +85,7 @@ export default {
       }
     },
     valid() {
-      if(this.product.name == '' || this.product.price <= 0 || this.product.image == '' || this.product.description == '') {
+      if(this.product.name == '' || this.product.price <= 0 || this.product.imageUrl == '' || this.product.description == '') {
         return false
       }
       return true;

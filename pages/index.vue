@@ -6,7 +6,6 @@
 </template>
 
 <script>
-import Categories from "@/components/categories/Categories";
 import Carousel from "@/components/common/Carousel";
 import Products from "@/components/products/Products";
 
@@ -23,7 +22,6 @@ export default {
     this.products = this.$store.getters.getProducts;
   },
   components: {
-    Categories,
     Carousel,
     Products,
   },

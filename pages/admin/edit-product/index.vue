@@ -1,6 +1,6 @@
 <template>
   <div>
-    //ADD PRODUCT!!!
+    //EDİT PRODUCT!!!
 
     <ProductAddForm />
   </div>
