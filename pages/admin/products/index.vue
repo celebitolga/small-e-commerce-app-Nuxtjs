@@ -36,7 +36,7 @@ export default {
   },
   fetch({store}) {
     return new Promise((resolve, reject) => {
-      store.dispatch("getAdminProducts")
+      store.dispatch("admin/getAdminProducts")
         .then(() => {
           // console.log("Products index.vue");
         })

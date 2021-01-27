@@ -76,7 +76,7 @@ export default {
   methods: {
     addProduct() {
       if(this.valid()) {
-        this.$store.dispatch("addProduct", this.product)
+        this.$store.dispatch("admin/addProduct", this.product)
           .then(() => {
             this.$router.push('/');
           })

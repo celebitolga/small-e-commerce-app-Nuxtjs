@@ -18,7 +18,7 @@ export default {
   },
   fetch({store}) {
     return new Promise((resolve, reject) => {
-      store.dispatch("getProducts")
+      store.dispatch("shop/getProducts")
         .then(() => {
           // console.log("Products index.vue");
         })
