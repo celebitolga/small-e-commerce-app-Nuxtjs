@@ -7,14 +7,12 @@
 </template>
 
 <script>
-import Categories from "@/components/categories/Categories";
-import ProductAddForm from "@/components/products/ProductAddForm";
+import ProductAddForm from "@/components/admin/ProductAddForm";
 export default {
   head: {
     title: 'Admin New Product',
   },
   components: {
-    Categories,
     ProductAddForm,
   },
 };

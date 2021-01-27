@@ -7,12 +7,17 @@
       Not Found!
     </div>
     <div v-else>
+      //EDİT PRODUCT!!!
+
+      <ProductAddForm :forEditProduct="product"/>
       {{product}}
     </div>
   </div>
 </template>
 
 <script>
+import ProductAddForm from "@/components/admin/ProductAddForm";
+
 export default {
   data() {
     return {
@@ -28,6 +33,9 @@ export default {
         this.product = this.$store.getters["admin/getEditProduct"];
         this.loading = false;
       })
+  },
+  components: {
+    ProductAddForm,
   },
   head: {
     title: "Products Detail /////",

@@ -1,5 +1,7 @@
 <template>
-  <form @submit.prevent="addProduct">
+  <form @submit.prevent="whichProduct">
+    <p v-if="this.forEditProduct">{{ this.product }} Save</p>
+    <p v-else>{{ this.product }} add</p>
 
     <div class="form-group row">
       <label class="col-sm-2 col-form-label">Product Name</label>
@@ -52,8 +54,15 @@
     <div class="form-group row">
       <div class="col-sm-10 offset-sm-2">
         <input
+          v-if="this.forEditProduct"
           type="submit"
           value="Save Product"
+          class="btn btn-primary mt-3"
+        />
+        <input
+          v-else
+          type="submit"
+          value="Add New Product"
           class="btn btn-primary mt-3"
         />
       </div>
@@ -63,30 +72,62 @@
 
 <script>
 export default {
-  data() {
-    return {
-      product: {
-        name: '',
-        price: '',
-        imageUrl: '',
-        description: '',
-      }
-    }
+  computed: {
+    product() {
+      return this.forEditProduct
+        ? { ...this.forEditProduct }
+        : {
+            name: "",
+            price: "",
+            imageUrl: "",
+            description: "",
+          };
+    },
+  },
+  props: {
+    forEditProduct: {
+      type: Object,
+      required: false,
+    },
   },
   methods: {
+    whichProduct() {
+      if (this.forEditProduct) {
+        // Edit Product
+        this.editProduct();
+      } else {
+        // Add new product
+        this.addProduct();
+      }
+    },
     addProduct() {
-      if(this.valid()) {
-        this.$store.dispatch("admin/addProduct", this.product)
-          .then(() => {
-            this.$router.push('/');
-          })
+      // Add new product
+      if (this.valid()) {
+        this.$store.dispatch("admin/addProduct", this.product).then(() => {
+          this.$router.push("/");
+        });
+      } else {
+        alert("Boş bırakma");
+      }
+    },
+    editProduct() {
+      // Edit Product
+      if (this.valid()) {
+        this.$store.dispatch("admin/editProduct", this.product).then(() => {
+          this.$router.push("/admin/products");
+        });
       } else {
         alert("Boş bırakma");
       }
     },
     valid() {
-      if(this.product.name == '' || this.product.price <= 0 || this.product.imageUrl == '' || this.product.description == '') {
-        return false
+      if (
+        this.product.name == "" ||
+        this.product.price <= 0 ||
+        this.product.imageUrl == "" ||
+        this.product.description == ""
+      ) {
+        return false;
       }
       return true;
     },

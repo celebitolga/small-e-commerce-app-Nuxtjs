@@ -56,4 +56,14 @@ module.exports = class Product {
       return false
     }
   }
+
+  static editProduct(product) {
+    let index = products.findIndex(product => product._id == product._id);
+    if (index > -1) {
+      products.splice(index, 1, product);
+      return true
+    } else {
+      return false
+    }
+  }
 }

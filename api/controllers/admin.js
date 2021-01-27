@@ -46,9 +46,27 @@ addProduct = (req, res, next) => {
 
 editProduct = (req, res, next) => {
   console.log("Admin edit product");
-  res.status(200).json({
-    title: 'Edit Product',
-  })
+  if (req.body.product) {
+    //Query if has product, it will update product
+    let isSucceed = Product.editProduct(req.body.product);
+    if (isSucceed) {
+      res.status(200).json({
+        message: "Edit Successful",
+      })
+    } else {
+      /// Fail...
+      console.log('BAD Request');
+      res.status(200).json({
+        err: "Not Found",
+      })
+    }
+  } else {
+    /// Fail...
+    console.log('BAD Request');
+    res.status(200).json({
+      err: "Not Found",
+    })
+  }
 }
 
 module.exports = {

@@ -9,6 +9,13 @@ export const mutations = {
   setAdminEditProduct(state, product) {
     state.adminEditProduct = product;
   },
+  setEditedProduct(state, product) {
+    ///????
+    let index = this.state.products.findIndex(p => p._id == product._id);
+    if (index > -1) {
+      this.state.products.splice(index, 1, product);
+    }
+  },
 }
 
 export const actions = {
@@ -38,6 +45,16 @@ export const actions = {
       .then((response) => {
         console.log(response.data.message);
         commit('addProduct', product);
+      })
+  },
+  editProduct({ commit }, product) {
+    return this.$axios.post("/admin/edit-product", { product })
+      .then((response) => {
+        if (response.data.err) {
+          //Nothing happend / Didnt edit
+        } else {
+          commit("setEditedProduct", product)
+        }
       })
   },
 }

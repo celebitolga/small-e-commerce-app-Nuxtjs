@@ -1,30 +1,16 @@
 <template>
   <div class="row">
-    <table class="table table-bordered" v-if="products.length > 0">
-      <thead>
-        <tr>
-          <th>Image</th>
-          <th>Product Name</th>
-          <th>Price</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(product, index) in products" :key="'product' + index">
-          <td> <img :src="product.imageUrl" style="width: 80px;"> </td>
-          <td> {{product.name}} </td>
-          <td> {{product.price}} TL</td>
-          <td>
-            <nuxt-link tag="a" class="btn btn-primary btn-sm" :to="'/admin/edit-product/' + product._id">Edit</nuxt-link>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+
+    <AdminProducts v-if="products.length > 0" :products="products"/>
+
     <h1 v-else>No Products</h1>
+
   </div>
 </template>
 
 <script>
+import AdminProducts from '@/components/admin/AdminProducts';
+
 export default {
   data() {
     return {
@@ -46,6 +32,9 @@ export default {
     }).catch((e) => {
       console.log(e);
     })
+  },
+  components: {
+    AdminProducts,
   },
   head: {
     title: "Admin Products",

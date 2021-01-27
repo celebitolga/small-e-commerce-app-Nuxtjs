@@ -12,12 +12,12 @@ const adminController = require('../controllers/admin')
 // /admin/products
 router.get('/products', adminController.getProducts);
 
-// /admin/getAdminProduct
-router.get('/getAdminProduct/:_id', adminController.getAdminProduct);
-
- // /admin/add-product => POST
+// /admin/add-product => POST
 router.post('/add-product', adminController.addProduct);
 
+
+// /admin/getAdminProduct for Edit
+router.get('/getAdminProduct/:_id', adminController.getAdminProduct);
 // /admin/edit-product => POST
 router.post('/edit-product', adminController.editProduct);
 
