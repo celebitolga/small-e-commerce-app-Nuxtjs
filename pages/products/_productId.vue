@@ -3,16 +3,17 @@
     LOADING...
   </div>
   <div v-else>
-    <div v-if="product === null">
-      Not Found!
+    <div v-if="product === null" class="row">
+      <h1 class="text-center">Not Found!</h1>
     </div>
     <div v-else>
-      {{product}}
+      <ProductDetail :product="product"/>
     </div>
   </div>
 </template>
 
 <script>
+import ProductDetail from '@/components/products/ProductDetail';
 export default {
   data() {
     return {
@@ -28,6 +29,9 @@ export default {
         this.product = this.$store.getters["shop/getProduct"];
         this.loading = false;
       })
+  },
+  components: {
+    ProductDetail,
   },
   head: {
     title: "Products Detail /////",
