@@ -66,4 +66,14 @@ module.exports = class Product {
       return false
     }
   }
+
+  static DeleteProductById(_id) {
+    let index = products.findIndex(p => p._id === +_id);
+    if (index > -1) {
+      products.splice(index, 1);
+      return true
+    } else {
+      return false
+    }
+  }
 }

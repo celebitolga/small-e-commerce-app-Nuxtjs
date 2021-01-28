@@ -1,8 +1,9 @@
 <template>
   <div class="row">
     <div v-if="action === 'edit' && action !== null" class="alert alert-success">The product has been updated</div>
+    <div v-if="deletedProduct !== null" class="alert alert-danger">The product ({{deletedProduct}}) has been deleted</div>
 
-    <AdminProducts v-if="products.length > 0" :products="products" :updatedId="updatedId"/>
+    <AdminProducts  v-if="products.length > 0" :products="products" :updatedId="updatedId" @deletedSucceed="deletedProduct = $event"/>
 
     <h1 v-else>No Products</h1>
 
@@ -16,6 +17,7 @@ export default {
   data() {
     return {
       products: [],
+      deletedProduct: null,
     }
   },
   computed: {
@@ -25,6 +27,9 @@ export default {
     updatedId() {
       return this.$route.params.id ? this.$route.params.id : null;
     },
+    // deleteProductName() {
+    //   return this.$route.params.name ? this.$route.params.name : null;
+    // },
   },
   created () {
     this.products = this.$store.getters.getProducts;

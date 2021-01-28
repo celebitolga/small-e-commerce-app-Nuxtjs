@@ -11,10 +11,18 @@ export const mutations = {
   },
   setEditedProduct(state, product) {
     ///????
-    let products = this.getters.getProducts
+    let products = this.getters.getProducts;
     let index = products.findIndex(p => p._id == product._id);
     if (index > -1) {
       this.state.products.splice(index, 1, product);
+    }
+  },
+  setDeleteProduct(state, _id) {
+    ////??
+    let products = this.getters.getProducts;
+    let index = products.findIndex(p => p._id == _id);
+    if (index > -1) {
+      this.state.products.splice(index, 1);
     }
   },
 }
@@ -55,6 +63,16 @@ export const actions = {
           //Nothing happend / Didnt edit
         } else {
           commit("setEditedProduct", product)
+        }
+      })
+  },
+  deleteProduct({ commit }, _id) {
+    return this.$axios.post("/admin/delete-product", { _id })
+      .then((response) => {
+        if (response.data.err) {
+          //Nothing happend / Didnt delete
+        } else {
+          commit("setDeleteProduct", _id)
         }
       })
   },

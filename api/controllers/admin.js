@@ -46,7 +46,7 @@ addProduct = (req, res, next) => {
   })
 }
 
-editProduct = (req, res, next) => {
+postEditProduct = (req, res, next) => {
   console.log("Admin edit product");
   if (req.body.product) {
     //Query if has product, it will update product
@@ -71,9 +71,36 @@ editProduct = (req, res, next) => {
   }
 }
 
+
+postDeleteProduct = (req, res, next) => {
+  console.log("Admin delete product");
+  if (req.body._id) {
+    //Query if has product, it will delete product
+    let isSucceed = Product.DeleteProductById(req.body._id);
+    if (isSucceed) {
+      res.status(200).json({
+        message: "Delete Successful",
+      })
+    } else {
+      /// Fail...
+      console.log('BAD Request');
+      res.status(200).json({
+        err: "Not Found",
+      })
+    }
+  } else {
+    /// Fail...
+    console.log('BAD Request');
+    res.status(200).json({
+      err: "Not Found",
+    })
+  }
+}
+
 module.exports = {
   getProducts,
   getAdminProduct,
   addProduct,
-  editProduct,
+  postEditProduct,
+  postDeleteProduct,
 }

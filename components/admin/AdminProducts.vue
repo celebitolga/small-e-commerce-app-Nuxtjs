@@ -19,8 +19,8 @@
             tag="a"
             class="btn btn-primary btn-sm"
             :to="'/admin/edit-product/' + product._id"
-            >Edit</nuxt-link
-          >
+            >Edit</nuxt-link>
+          <button class="btn btn-danger btn-sm" @click="deleteProduct(product)">Delete</button>
         </td>
       </tr>
     </tbody>
@@ -37,6 +37,17 @@ export default {
     updatedId: {
       type: Number,
       required: false,
+    }
+  },
+  methods: {
+    deleteProduct(product) {
+      if(confirm(`--${ product.name }-- will delete, are you sure?`)) {
+        this.$store.dispatch("admin/deleteProduct", product._id )
+          .then(() => {
+            /// Delete succeed
+            this.$emit("deletedSucceed", product.name)
+          })
+      }
     }
   },
 };
