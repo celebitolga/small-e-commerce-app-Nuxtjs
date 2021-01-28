@@ -3,7 +3,7 @@ export const state = () => ({
 })
 
 export const mutations = {
-  addProduct({commit}, product) {
+  addProduct(state, product) {
     this.state.products.push(product);
   },
   setAdminEditProduct(state, product) {
@@ -11,7 +11,8 @@ export const mutations = {
   },
   setEditedProduct(state, product) {
     ///????
-    let index = this.state.products.findIndex(p => p._id == product._id);
+    let products = this.getters.getProducts
+    let index = products.findIndex(p => p._id == product._id);
     if (index > -1) {
       this.state.products.splice(index, 1, product);
     }
@@ -35,8 +36,8 @@ export const actions = {
           commit("setAdminEditProduct", null);
         } else {
           /// Found
-          let product = response.data.product
-          commit("setAdminEditProduct", product)
+          let product = response.data.product;
+          commit("setAdminEditProduct", product);
         }
       });
   },
@@ -44,7 +45,7 @@ export const actions = {
     return this.$axios.post('/admin/add-product', { product })
       .then((response) => {
         console.log(response.data.message);
-        commit('addProduct', product);
+        commit('addProduct', response.data.product);
       })
   },
   editProduct({ commit }, product) {

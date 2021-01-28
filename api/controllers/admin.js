@@ -12,7 +12,7 @@ getProducts = (req, res, next) => {
 getAdminProduct = (req, res, next) => {
   console.log("Get Admin product By Id");
   let _id = req.params._id;
-  const product = Product.getProduct(_id);
+  let product = Product.getProduct(_id);
   if (product) {
     res.status(200).json({
       title: 'Product Detail',
@@ -41,6 +41,7 @@ addProduct = (req, res, next) => {
 
   res.status(200).json({
     message: "Registration Successful",
+    product,
   })
 }
 
