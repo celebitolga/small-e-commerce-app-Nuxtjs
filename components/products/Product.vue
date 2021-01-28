@@ -2,7 +2,7 @@
   <div class="col-md-4">
     <div class="card my-3">
       <nuxt-link tag="a" :to="'/products/'+product._id">
-        <img :src="product.imageUrl" :alt="product.name" :title="product.name" class="card-img-top product-image" />
+        <img :src="product.imageUrl" :alt="product.name" :title="product.name" class="card-img-top product-image" v-lazy-load/>
       </nuxt-link>
       <div class="card-body">
         <h4 class="card-title">
