@@ -9,7 +9,8 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="(product, index) in products" :key="'product' + index">
+      
+      <tr v-for="(product, index) in products" :key="'product' + index" :class="{'bg-success': updatedId == product._id}">
         <td><img :src="product.imageUrl" style="width: 80px" /></td>
         <td>{{ product.name }}</td>
         <td>{{ product.price }} TL</td>
@@ -33,6 +34,10 @@ export default {
       type: Array,
       required: false,
     },
+    updatedId: {
+      type: Number,
+      required: false,
+    }
   },
 };
 </script>

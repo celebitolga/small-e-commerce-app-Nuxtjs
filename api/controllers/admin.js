@@ -6,6 +6,7 @@ getProducts = (req, res, next) => {
   res.status(200).json({
     title: 'Admin Products',
     products,
+    action: req.query.action,
   })
 }
 

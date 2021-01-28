@@ -10,7 +10,6 @@
       //EDİT PRODUCT!!!
 
       <ProductAddForm :forEditProduct="product"/>
-      {{product}}
     </div>
   </div>
 </template>

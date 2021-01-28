@@ -1,7 +1,5 @@
 <template>
   <form @submit.prevent="whichProduct">
-    <p v-if="this.forEditProduct">{{ this.product }} Save</p>
-    <p v-else>{{ this.product }} add</p>
 
     <div class="form-group row">
       <label class="col-sm-2 col-form-label">Product Name</label>
@@ -107,17 +105,18 @@ export default {
           this.$router.push("/");
         });
       } else {
-        alert("Boş bırakma");
+        alert("Don't leave spaces");
       }
     },
     editProduct() {
       // Edit Product
       if (this.valid()) {
         this.$store.dispatch("admin/editProduct", this.product).then(() => {
-          this.$router.push("/admin/products");
+          // this.$router.push("/admin/products?action=edit&id="+this.product._id);
+          this.$router.push({ name: "admin-products", params: { action: 'edit', id: this.product._id } });
         });
       } else {
-        alert("Boş bırakma");
+        alert("Don't leave spaces");
       }
     },
     valid() {
