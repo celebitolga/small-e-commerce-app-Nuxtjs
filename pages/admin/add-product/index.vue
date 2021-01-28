@@ -11,6 +11,7 @@ import Categories from "@/components/categories/Categories";
 import ProductAddForm from "@/components/admin/ProductAddForm";
 
 export default {
+  layout: 'addProduct',
   head: {
     title: 'Admin New Product',
   },
