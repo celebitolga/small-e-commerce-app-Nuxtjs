@@ -15,6 +15,7 @@
 <script>
 import ProductDetail from '@/components/products/ProductDetail';
 export default {
+  layout: 'details',
   data() {
     return {
       product: null,
