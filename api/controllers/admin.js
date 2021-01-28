@@ -35,7 +35,8 @@ addProduct = (req, res, next) => {
     req.body.product.name,
     req.body.product.price,
     req.body.product.imageUrl,
-    req.body.product.description
+    req.body.product.description,
+    req.body.product._categoryId,
   );
 
   product.saveProduct();

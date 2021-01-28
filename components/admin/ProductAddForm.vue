@@ -50,6 +50,16 @@
     </div>
 
     <div class="form-group row">
+      <label class="col-sm-2 col-form-label">Product Category</label>
+      <div class="col-sm-10">
+        <select class="form-select" v-model="product._categoryId">
+          <option value="-1" selected>Select Category</option>
+          <option v-for="category in categories" :value="category._id" :key="'category-'+category._id"> {{category.name}} </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
       <div class="col-sm-10 offset-sm-2">
         <input
           v-if="this.forEditProduct"
@@ -79,7 +89,11 @@ export default {
             price: "",
             imageUrl: "",
             description: "",
+            _categoryId: "",
           };
+    },
+    categories() {
+      return this.$store.getters.getCategories;
     },
   },
   props: {
@@ -113,7 +127,10 @@ export default {
       if (this.valid()) {
         this.$store.dispatch("admin/editProduct", this.product).then(() => {
           // this.$router.push("/admin/products?action=edit&id="+this.product._id);
-          this.$router.push({ name: "admin-products", params: { action: 'edit', id: this.product._id } });
+          this.$router.push({
+            name: "admin-products",
+            params: { action: "edit", id: this.product._id },
+          });
         });
       } else {
         alert("Don't leave spaces");
@@ -124,7 +141,9 @@ export default {
         this.product.name == "" ||
         this.product.price <= 0 ||
         this.product.imageUrl == "" ||
-        this.product.description == ""
+        this.product.description == "" ||
+        this.product._categoryId == -1 ||
+        this.product._categoryId == ''
       ) {
         return false;
       }
