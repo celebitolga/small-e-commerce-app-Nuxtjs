@@ -2,10 +2,10 @@
   <table class="table table-bordered">
     <thead>
       <tr>
-        <th>Image</th>
+        <th style="width: 100px;">Image</th>
         <th>Product Name</th>
-        <th>Price</th>
-        <th></th>
+        <th style="width: 150px;">Price</th>
+        <th style="width: 133px;"></th>
       </tr>
     </thead>
     <tbody>
@@ -17,7 +17,7 @@
         <td>
           <nuxt-link
             tag="a"
-            class="btn btn-primary btn-sm"
+            class="btn btn-primary btn-sm mr-2"
             :to="'/admin/edit-product/' + product._id"
             >Edit</nuxt-link>
           <button class="btn btn-danger btn-sm" @click="deleteProduct(product)">Delete</button>

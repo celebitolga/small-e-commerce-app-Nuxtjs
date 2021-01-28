@@ -14,6 +14,7 @@
 import AdminProducts from '@/components/admin/AdminProducts';
 
 export default {
+  layout: 'addProduct',
   data() {
     return {
       products: [],

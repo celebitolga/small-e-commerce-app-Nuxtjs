@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Carousel />
+    <Carousel/>
     <Products :products="products"/>
   </div>
 </template>

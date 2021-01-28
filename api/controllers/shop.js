@@ -1,21 +1,26 @@
 const Product = require('../models/product');
+const Category = require('../models/category');
 
 
 getIndex = (req, res, next) => {
   console.log("Get product Index");
   const products = Product.getAll();
+  const categories = Category.getAllCategories();
   res.status(200).json({
     title: 'Shopping',
     products,
+    categories,
   })
 }
 
 getProducts = (req, res, next) => {
   console.log("Get product All");
   const products = Product.getAll();
+  const categories = Category.getAllCategories();
   res.status(200).json({
     title: 'Products',
     products,
+    categories,
   })
 }
 
