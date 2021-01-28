@@ -4,6 +4,7 @@
       tag="a"
       :to="'/categories/' + category._id"
       class="list-group-item"
+      exact-active-class="active"
       >{{ category.name }}</nuxt-link
     >
   </div>

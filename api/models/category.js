@@ -1,16 +1,16 @@
 const categories = [
   {
-    _id: Math.floor(Math.random() * 999999) + 1,
+    _id: 1,
     name: 'Telefon',
     description: "Telefon kategori ürünleri",
   },
   {
-    _id: Math.floor(Math.random() * 999999) + 1,
+    _id: 2,
     name: 'Bilgisayar',
     description: "Bilgisayar kategori ürünleri",
   },
   {
-    _id: Math.floor(Math.random() * 999999) + 1,
+    _id: 3,
     name: 'Beyaz Eşya',
     description: "Beyaz Eşya kategori ürünleri",
   },
@@ -18,7 +18,7 @@ const categories = [
 
 module.exports = class Category {
   constructor(name, description) {
-    this._id = Math.floor(Math.random() * 999999) + 1;
+    this._id = categories.length + 1;
     this.name = name;
     this.description = description;
   }

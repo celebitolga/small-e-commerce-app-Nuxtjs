@@ -2,7 +2,7 @@
   <div>
     <div class="row">
       <div class="col-md-3">
-        <img :src="product.imageUrl" :alt="product.description" />
+        <img :src="product.imageUrl" :alt="product.description" style="width: 100%"/>
       </div>
       <div class="col-md-9 pl-3">
         <h1 class="mb-3">{{ product.name }}</h1>

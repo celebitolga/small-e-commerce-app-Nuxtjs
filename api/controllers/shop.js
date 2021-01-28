@@ -41,6 +41,25 @@ getProductById = (req, res, next) => {
   }
 }
 
+getProductsByCategory = (req, res, next) => {
+  console.log("Get products By Category");
+  let _categoryId = req.params._categoryId;
+  const products = Product.getProductByCategoryId(_categoryId);
+  const categories = Category.getAllCategories();
+  if (products) {
+    res.status(200).json({
+      title: 'Product Category',
+      products,
+      categories,
+    })
+  } else {
+    console.log('BAD Request');
+    res.status(200).json({
+      err: "Not Found",
+    })
+  }
+}
+
 
 getProductDetails = (req, res, next) => {
   console.log("Get product Details");
@@ -70,5 +89,6 @@ module.exports = {
   getProductDetails,
   getCart,
   getOrders,
-  getProductById
+  getProductById,
+  getProductsByCategory,
 }
