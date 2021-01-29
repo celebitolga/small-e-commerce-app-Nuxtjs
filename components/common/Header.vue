@@ -22,6 +22,9 @@
         <li class="nav-item">
           <nuxt-link tag="a" to="/admin/products" class="nav-link" exact-active-class="active">Admin Products</nuxt-link>
         </li>
+        <li class="nav-item">
+          <nuxt-link tag="a" to="/admin/categories" class="nav-link" exact-active-class="active">Admin Categories</nuxt-link>
+        </li>
       </ul>
 
       <ul class="navbar-nav ml-auto">

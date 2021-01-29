@@ -29,14 +29,6 @@ export const mutations = {
       this.state.categories.splice(index, 1, category);
     }
   },
-  setDeleteProduct(state, _id) {
-    ////??
-    let products = this.getters.getProducts;
-    let index = products.findIndex(p => p._id == _id);
-    if (index > -1) {
-      this.state.products.splice(index, 1);
-    }
-  },
   setProducts(state, products) {
     this.state.products = products;
   },
@@ -45,6 +37,22 @@ export const mutations = {
   },
   setAdminEditCategory(state, category) {
     state.adminEditCategory = category;
+  },
+  setDeleteProduct(state, _id) {
+    ////??
+    let products = this.getters.getProducts;
+    let index = products.findIndex(p => p._id == _id);
+    if (index > -1) {
+      this.state.products.splice(index, 1);
+    }
+  },
+  setDeleteCategory(state, _id) {
+    ////??
+    let categories = this.getters.getCategories;
+    let index = categories.findIndex(c => c._id == _id);
+    if (index > -1) {
+      this.state.categories.splice(index, 1);
+    }
   },
 }
 
@@ -79,7 +87,6 @@ export const actions = {
     return this.$axios.get("/admin/getAdminCategory/" + _categoryId)
       .then((response) => {
         //response.data.title
-        console.log(response.data.category);
         if (response.data.err) {
           /// Not Found
           commit("setAdminEditCategory", null);
@@ -129,6 +136,16 @@ export const actions = {
       .then((response) => {
         if (!response.data.err) {
           commit("setDeleteProduct", _id)
+        } else {
+          //Nothing happend / Didnt delete
+        }
+      })
+  },
+  deleteCategory({ commit }, _id) {
+    return this.$axios.post("/admin/delete-category", { _id })
+      .then((response) => {
+        if (!response.data.err) {
+          commit("setDeleteCategory", _id)
         } else {
           //Nothing happend / Didnt delete
         }

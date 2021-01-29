@@ -45,6 +45,9 @@ router.post('/edit-category', adminController.postEditCategory);
 // DELETE PRODUCT
 router.post('/delete-product', adminController.postDeleteProduct);
 
+///DELETE CATEGORY
+router.post('/delete-category', adminController.postDeleteCategory);
+
       //////////////////////////////////////////// POST //////
 
 module.exports = router;

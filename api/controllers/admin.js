@@ -160,7 +160,6 @@ postEditProduct = (req, res, next) => {
 postEditCategory = (req, res, next) => {
   console.log("Admin edit category");
   if (req.body.category) {
-    console.log();
     try {
       //Query if has product, it will update product
       const category = {
@@ -235,6 +234,42 @@ postDeleteProduct = (req, res, next) => {
   }
 }
 
+postDeleteCategory = (req, res, next) => {
+  console.log("Admin delete category");
+
+  if (req.body._id) {
+    try {
+      //Query if has product, it will delete product
+      CategoryModel.deleteCategoryById(req.body._id)
+        .then((result) => {
+          if (result) {
+            res.status(200).json({
+              message: "Delete Successful",
+            })
+          } else {
+            /// Fail...
+            console.log('BAD Delete Request');
+            res.status(200).json({
+              err: "Not Found",
+            })
+          }
+        })
+    } catch (error) {
+      /// Fail...
+      console.log('BAD Delete Request');
+      res.status(200).json({
+        err: "Not Found",
+      })
+    }
+  } else {
+    /// Fail...
+    console.log('BAD Delete Request');
+    res.status(200).json({
+      err: "Not Found",
+    })
+  }
+}
+
 module.exports = {
   getProducts,
   getCategories,
@@ -245,4 +280,5 @@ module.exports = {
   postEditProduct,
   postEditCategory,
   postDeleteProduct,
+  postDeleteCategory,
 }

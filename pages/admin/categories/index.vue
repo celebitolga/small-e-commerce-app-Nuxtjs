@@ -1,7 +1,9 @@
 <template>
     <div class="row">
       <div v-if="action === 'edit' && action !== null" class="alert alert-success">The product has been updated</div>
-      <AdminCategories :categories="categories" :updatedId="updatedId"/>
+      <div v-if="deletedCategory !== null" class="alert alert-danger">The product ({{deletedCategory}}) has been deleted</div>
+
+      <AdminCategories :categories="categories" :updatedId="updatedId" @deletedSucceed="deletedCategory = $event"/>
     </div>
 </template>
 
@@ -12,6 +14,7 @@ export default {
   data() {
     return {
       categories: [],
+      deletedCategory: null,
     }
   },
   computed: {

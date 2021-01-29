@@ -35,7 +35,13 @@ export default {
   },
   methods: {
     deleteCategory(category) {
-      console.log(category);
+      if(confirm(`--${ category.name }-- will delete, are you sure?`)) {
+        this.$store.dispatch("admin/deleteCategory", category._id )
+          .then(() => {
+            /// Delete succeed
+            this.$emit("deletedSucceed", category.name)
+          })
+      }
     }
   },
 };

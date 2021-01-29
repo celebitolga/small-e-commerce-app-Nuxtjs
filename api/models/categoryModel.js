@@ -53,4 +53,17 @@ module.exports = class Category {
         return result;
       })
   }
+
+
+  static deleteCategoryById(_id) {
+    const db = getDb();
+
+    return db.collection('categories')
+      .deleteOne({
+        _id: new mongodb.ObjectID(_id)
+      })
+      .then(() => {
+        return true;
+      })
+  }
 }
