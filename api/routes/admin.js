@@ -9,19 +9,36 @@ const adminController = require('../controllers/admin')
 
 
 ////METHOTS
-// /admin/products
+/// GET ////////////////////////////////////////////////
+
+// GET PRODUCTS
 router.get('/products', adminController.getProducts);
 
-// /admin/add-product => POST
+// GET CATEGORIES
+router.get('/categories', adminController.getCategories);
+
+// GET PRODUCT BY ID
+router.get('/getAdminProduct/:_id', adminController.getAdminProduct);
+
+      //////////////////////////////////////////// GET //////
+
+
+/// POST ////////////////////////////////////////////////
+
+// ADD PRODUCT
 router.post('/add-product', adminController.addProduct);
 
+// ADD CATEGORY
+router.post('/add-category', adminController.addCategory);
 
-// /admin/getAdminProduct for Edit
-router.get('/getAdminProduct/:_id', adminController.getAdminProduct);
-// /admin/edit-product => POST
+
+// EDİT PRODUCT
 router.post('/edit-product', adminController.postEditProduct);
 
-// Detele
+
+// DELETE PRODUCT
 router.post('/delete-product', adminController.postDeleteProduct);
+
+      //////////////////////////////////////////// POST //////
 
 module.exports = router;

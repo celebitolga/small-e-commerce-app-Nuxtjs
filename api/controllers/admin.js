@@ -1,8 +1,9 @@
 const ProductModel = require('../models/productModel');
+const CategoryModel = require('../models/categoryModel');
 
 
 getProducts = (req, res, next) => {
-  console.log("Admin getaa products");
+  console.log("Admin get products");
   ProductModel.findAll()
     .then((products) => {
       res.status(200).json({
@@ -12,6 +13,16 @@ getProducts = (req, res, next) => {
     })
 }
 
+getCategories = (req, res, next) => {
+  console.log("Admin get categories");
+  CategoryModel.findAll()
+    .then((categories) => {
+      res.status(200).json({
+        title: 'Admin Categories',
+        categories,
+      })
+    })
+}
 
 getAdminProduct = (req, res, next) => {
   console.log("Get Admin product By Id");
@@ -39,7 +50,6 @@ getAdminProduct = (req, res, next) => {
   }
 }
 
-
 addProduct = (req, res, next) => {
   console.log("Admin new product");
   const product = new ProductModel(
@@ -54,13 +64,27 @@ addProduct = (req, res, next) => {
   product.save()
     .then(() => {
       res.status(200).json({
-        message: "Registration Successful",
+        message: "Product Registration Successful",
         product,
       })
     })
 }
 
+addCategory = (req, res, next) => {
+  console.log("Admin new category");
+  const category = new CategoryModel(
+    req.body.category.name,
+    req.body.category.description,
+  );
 
+  category.save()
+    .then((result) => {
+      res.status(200).json({
+        message: "Category Registration Successful",
+        category,
+      })
+    })
+}
 
 postEditProduct = (req, res, next) => {
   console.log("Admin edit product");
@@ -108,7 +132,6 @@ postEditProduct = (req, res, next) => {
 }
 
 
-
 postDeleteProduct = (req, res, next) => {
   console.log("Admin delete product");
 
@@ -147,8 +170,10 @@ postDeleteProduct = (req, res, next) => {
 
 module.exports = {
   getProducts,
+  getCategories,
   getAdminProduct,
   addProduct,
+  addCategory,
   postEditProduct,
   postDeleteProduct,
 }

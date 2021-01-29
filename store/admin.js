@@ -6,6 +6,9 @@ export const mutations = {
   addProduct(state, product) {
     this.state.products.push(product);
   },
+  addCategory(state, category) {
+    this.state.categories.push(category);
+  },
   setAdminEditProduct(state, product) {
     state.adminEditProduct = product;
   },
@@ -28,6 +31,9 @@ export const mutations = {
   setProducts(state, products) {
     this.state.products = products;
   },
+  setCategories(state, categories) {
+    this.state.categories = categories;
+  },
 }
 
 export const actions = {
@@ -35,6 +41,12 @@ export const actions = {
     return this.$axios.get("/admin/products").then((response) => {
       //response.data.title
       commit('setProducts', response.data.products)
+    });
+  },
+  getAdminCategories({ commit }) {
+    return this.$axios.get("/admin/categories").then((response) => {
+      //response.data.title
+      commit('setCategories', response.data.categories)
     });
   },
   getAdminProduct({ commit }, _productId) {
@@ -56,6 +68,13 @@ export const actions = {
       .then((response) => {
         console.log(response.data.message);
         commit('addProduct', response.data.product);
+      })
+  },
+  addCategory({ commit}, category) {
+    return this.$axios.post('/admin/add-category', { category })
+      .then((response) => {
+        //console.log(response.data.message);
+        commit('addCategory', response.data.category);
       })
   },
   editProduct({ commit }, product) {
