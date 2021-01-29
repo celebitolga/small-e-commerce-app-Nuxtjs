@@ -70,7 +70,7 @@ getProductsByCategory = async (req, res, next) => {
   let _categoryId = req.params._categoryId;
   const categories = await CategoryModel.findAll().then(categories => categories)
   try {
-    ProductModel.findAllByCategory(_categoryId)
+    ProductModel.findAllByCategoryId(_categoryId)
       .then((products) => {
         if (products != null) {
           res.status(200).json({
@@ -91,20 +91,6 @@ getProductsByCategory = async (req, res, next) => {
       err: "Not Found",
     })
   }
-  
-  // const products = Product.findAllByCategory(_categoryId);
-  // if (products) {
-  //   res.status(200).json({
-  //     title: 'Product Category',
-  //     products,
-  //     categories,
-  //   })
-  // } else {
-  //   console.log('BAD Request');
-  //   res.status(200).json({
-  //     err: "Not Found",
-  //   })
-  // }
 }
 
 

@@ -40,12 +40,12 @@ module.exports = class ProductModel {
       })
   }
 
-  static findAllByCategory(_categoryId) {
+  static findAllByCategoryId(_categoryId) {
     const db = getDb();
 
     return db.collection('products')
       .find({
-        _categoryId: +_categoryId
+        categories: _categoryId
       })
       .toArray()
       .then((products) => {
