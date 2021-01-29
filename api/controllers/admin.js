@@ -83,7 +83,7 @@ addProduct = (req, res, next) => {
     req.body.product.price,
     req.body.product.imageUrl,
     req.body.product.description,
-    req.body.product._categoryId,
+    req.body.product.categories,
     req.user._id,
   );
 
@@ -124,7 +124,7 @@ postEditProduct = (req, res, next) => {
         price: req.body.product.price,
         imageUrl: req.body.product.imageUrl,
         description: req.body.product.description,
-        _categoryId: req.body.product._categoryId,
+        categories: req.body.product.categories,
         _userId: req.user._id,
       }
       ProductModel.editProduct(product)

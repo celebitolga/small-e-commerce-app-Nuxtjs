@@ -1,6 +1,5 @@
 <template>
   <form @submit.prevent="whichProduct">
-
     <div class="form-group row">
       <label class="col-sm-2 col-form-label">Product Name</label>
       <div class="col-sm-10">
@@ -52,10 +51,17 @@
     <div class="form-group row">
       <label class="col-sm-2 col-form-label">Product Category</label>
       <div class="col-sm-10">
-        <select class="form-select" v-model="product._categoryId">
-          <option value="-1" selected>Select Category</option>
-          <option v-for="category in categories" :value="category._id" :key="'category-'+category._id"> {{category.name}} </option>
-        </select>
+        <div v-for="category in categories" :key="'category-' + category._id">
+          <label :for="category._id"> {{category.name}} </label>
+          <input
+            type="checkbox"
+            name="categoryids"
+            :id="category._id"
+            :value="category._id"
+            v-model="selectedCategories"
+          />
+        </div>
+        {{selectedCategories}}
       </div>
     </div>
 
@@ -80,6 +86,11 @@
 
 <script>
 export default {
+  data() {
+    return {
+      selectedCategories: [],
+    }
+  },
   computed: {
     product() {
       return this.forEditProduct
@@ -89,12 +100,19 @@ export default {
             price: "",
             imageUrl: "",
             description: "",
-            _categoryId: "",
+            categories: [],
           };
     },
     categories() {
       return this.$store.getters.getCategories;
     },
+  },
+  created () {
+    let categories = [];
+    if(this.product.categories.length > 0) {
+      categories = [...this.product.categories]
+      this.selectedCategories = categories.map(c => c);
+    }
   },
   props: {
     forEditProduct: {
@@ -114,8 +132,10 @@ export default {
     },
     addProduct() {
       // Add new product
-      if (this.valid()) {
-        this.$store.dispatch("admin/addProduct", this.product).then(() => {
+      let product = {...this.product, categories: this.selectedCategories };
+      console.log(product);
+      if (this.valid(product)) {
+        this.$store.dispatch("admin/addProduct", product).then(() => {
           this.$router.push("/");
         });
       } else {
@@ -124,26 +144,27 @@ export default {
     },
     editProduct() {
       // Edit Product
-      if (this.valid()) {
-        this.$store.dispatch("admin/editProduct", this.product).then(() => {
+      let product = {...this.product, categories: this.selectedCategories };
+      console.log(product);
+      if (this.valid(product)) {
+        this.$store.dispatch("admin/editProduct", product).then(() => {
           // this.$router.push("/admin/products?action=edit&id="+this.product._id);
           this.$router.push({
             name: "admin-products",
-            params: { action: "edit", id: this.product._id },
+            params: { action: "edit", id: product._id },
           });
         });
       } else {
         alert("Don't leave spaces");
       }
     },
-    valid() {
+    valid(product) {
       if (
-        this.product.name == "" ||
-        this.product.price <= 0 ||
-        this.product.imageUrl == "" ||
-        this.product.description == "" ||
-        this.product._categoryId == -1 ||
-        this.product._categoryId == ''
+        product.name == "" ||
+        product.price <= 0 ||
+        product.imageUrl == "" ||
+        product.description == "" ||
+        product.categories.length == 0
       ) {
         return false;
       }
