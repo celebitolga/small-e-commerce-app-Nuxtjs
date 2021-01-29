@@ -18,6 +18,7 @@
 import ProductAddForm from "@/components/admin/ProductAddForm";
 
 export default {
+  layout: 'addProduct',
   data() {
     return {
       product: null,

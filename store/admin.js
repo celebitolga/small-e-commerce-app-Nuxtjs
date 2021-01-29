@@ -25,14 +25,16 @@ export const mutations = {
       this.state.products.splice(index, 1);
     }
   },
+  setProducts(state, products) {
+    this.state.products = products;
+  },
 }
 
 export const actions = {
   getAdminProducts({ commit }) {
     return this.$axios.get("/admin/products").then((response) => {
       //response.data.title
-      //console.log(response.data);
-      //commit('setProducts', response.data.products)
+      commit('setProducts', response.data.products)
     });
   },
   getAdminProduct({ commit }, _productId) {

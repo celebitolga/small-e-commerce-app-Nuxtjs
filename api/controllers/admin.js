@@ -1,37 +1,62 @@
 const Product = require('../models/product');
+const ProductModel = require('../models/productModel');
 
 getProducts = (req, res, next) => {
-  console.log("Admin get products");
-  const products = Product.getAll();
-  res.status(200).json({
-    title: 'Admin Products',
-    products,
-    action: req.query.action,
-  })
+  console.log("Admin getaa products");
+  ProductModel.findAll()
+    .then((products) => {
+      res.status(200).json({
+        title: 'Admin Products',
+        products,
+      })
+    })
+  
 }
 
 getAdminProduct = (req, res, next) => {
   console.log("Get Admin product By Id");
   let _id = req.params._id;
-  let product = Product.getProduct(_id);
-  if (product) {
-    res.status(200).json({
-      title: 'Product Detail',
-      product: {
-        ...product
-      }
-    })
-  } else {
+  try {
+    ProductModel.findById(_id)
+      .then((product) => {
+        if (product != null) {
+          res.status(200).json({
+            title: 'Product Edited',
+            product,
+          })
+        } else {
+          console.log('BAD Request');
+          res.status(200).json({
+            err: "Not Found",
+          })
+        }
+      })
+  } catch (error) {
     console.log('BAD Request');
     res.status(200).json({
       err: "Not Found",
     })
   }
+  
+  // let product = Product.getProduct(_id);
+  // if (product) {
+  //   res.status(200).json({
+  //     title: 'Product Detail',
+  //     product: {
+  //       ...product
+  //     }
+  //   })
+  // } else {
+  //   console.log('BAD Request');
+  //   res.status(200).json({
+  //     err: "Not Found",
+  //   })
+  // }
 }
 
 addProduct = (req, res, next) => {
   console.log("Admin new product");
-  const product = new Product(
+  const product = new ProductModel(
     req.body.product.name,
     req.body.product.price,
     req.body.product.imageUrl,
@@ -39,12 +64,13 @@ addProduct = (req, res, next) => {
     req.body.product._categoryId,
   );
 
-  product.saveProduct();
-
-  res.status(200).json({
-    message: "Registration Successful",
-    product,
-  })
+  product.save()
+    .then(() => {
+      res.status(200).json({
+        message: "Registration Successful",
+        product,
+      })
+    })
 }
 
 postEditProduct = (req, res, next) => {
