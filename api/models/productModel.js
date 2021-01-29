@@ -2,12 +2,13 @@ const getDb = require('../database').getDb;
 const mongodb = require('mongodb')
 
 module.exports = class ProductModel {
-  constructor(name, price, imageUrl, description, _categoryId) {
+  constructor(name, price, imageUrl, description, _categoryId, _userId) {
     this.name = name;
     this.price = price;
     this.imageUrl = imageUrl;
     this.description = description;
     this._categoryId = _categoryId;
+    this._userId = _userId;
   }
 
   save() {
@@ -25,6 +26,7 @@ module.exports = class ProductModel {
 
   static findAll() {
     const db = getDb();
+    
     return db.collection('products')
       .find({})
       // .project({ name: 1, price: 1, imageUrl: 1 })
@@ -42,6 +44,7 @@ module.exports = class ProductModel {
 
   static findAllByCategory(_categoryId) {
     const db = getDb();
+
     return db.collection('products')
       .find({
         _categoryId: +_categoryId
@@ -58,6 +61,7 @@ module.exports = class ProductModel {
 
   static findById(_id) {
     const db = getDb();
+
     // return db.collection('products')
     //   .find({
     //     _id: new mongodb.ObjectID(_id)
@@ -90,9 +94,10 @@ module.exports = class ProductModel {
           price: product.price,
           imageUrl: product.imageUrl,
           description: product.description,
-          _categoryId: product._categoryId
+          _categoryId: product._categoryId,
+          _userId: product._userId,
         }
-      })
+      }, false, true)
       .then((result) => {
         return result;
       })

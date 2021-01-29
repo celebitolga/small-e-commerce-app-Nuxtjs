@@ -48,6 +48,7 @@ addProduct = (req, res, next) => {
     req.body.product.imageUrl,
     req.body.product.description,
     req.body.product._categoryId,
+    req.user._id,
   );
 
   product.save()
@@ -64,9 +65,19 @@ addProduct = (req, res, next) => {
 postEditProduct = (req, res, next) => {
   console.log("Admin edit product");
   if (req.body.product) {
+    console.log();
     try {
       //Query if has product, it will update product
-      ProductModel.editProduct(req.body.product)
+      const product = {
+        _id: req.body.product._id,
+        name: req.body.product.name,
+        price: req.body.product.price,
+        imageUrl: req.body.product.imageUrl,
+        description: req.body.product.description,
+        _categoryId: req.body.product._categoryId,
+        _userId: req.user._id,
+      }
+      ProductModel.editProduct(product)
         .then((result) => {
           if (result != null) {
             res.status(200).json({

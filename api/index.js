@@ -7,6 +7,16 @@ const mongoConnect = require('./database').mongoConnect;
 
 app.use(bodyParser.json())
 
+const User = require('./models/user');
+
+app.use((req, res, next) => {
+  User.findByUsername('tolga')
+    .then((user) => {
+      req.user = new User(user.name, user.email, user._id);
+      next();
+    })
+    .catch(err => console.log(err))
+})
 
 //require routes
 const adminRoutes = require('./routes/admin');
@@ -23,7 +33,20 @@ app.get('*', (req, res) => {
 })
 
 mongoConnect((client) => {
-  
+  User.findByUsername('tolga')
+    .then((user) => {
+      if (!user) {
+        user = new User('tolga', 'tolgacelebi78@gmail.com');
+        return user.save();
+      }
+      return user;
+    })
+    .then((user) => {
+      console.log(user);
+    })
+    .catch((err) => {
+      console.log(err);
+    })
 })
 
 module.exports = app;
