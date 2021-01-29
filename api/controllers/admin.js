@@ -50,6 +50,32 @@ getAdminProduct = (req, res, next) => {
   }
 }
 
+getAdminCategory = (req, res, next) => {
+  console.log("Get Admin category By Id");
+  let _id = req.params._id;
+  try {
+    CategoryModel.findById(_id)
+      .then((category) => {
+        if (category != null) {
+          res.status(200).json({
+            title: 'Product Edited',
+            category,
+          })
+        } else {
+          console.log('BAD Request');
+          res.status(200).json({
+            err: "Not Found",
+          })
+        }
+      })
+  } catch (error) {
+    console.log('BAD Request');
+    res.status(200).json({
+      err: "Not Found",
+    })
+  }
+}
+
 addProduct = (req, res, next) => {
   console.log("Admin new product");
   const product = new ProductModel(
@@ -131,6 +157,47 @@ postEditProduct = (req, res, next) => {
   }
 }
 
+postEditCategory = (req, res, next) => {
+  console.log("Admin edit category");
+  if (req.body.category) {
+    console.log();
+    try {
+      //Query if has product, it will update product
+      const category = {
+        _id: req.body.category._id,
+        name: req.body.category.name,
+        description: req.body.category.description,
+      }
+      CategoryModel.editCategory(category)
+        .then((result) => {
+          if (result != null) {
+            res.status(200).json({
+              message: "Category Edit Successful",
+            })
+          } else {
+            /// Fail...
+            console.log('BAD Request');
+            res.status(200).json({
+              err: "Not Found",
+            })
+          }
+        })
+    } catch (error) {
+      /// Fail...
+      console.log('BAD Request');
+      res.status(200).json({
+        err: "Not Found",
+      })
+    }
+  } else {
+    /// Fail...
+    console.log('BAD Request');
+    res.status(200).json({
+      err: "Not Found",
+    })
+  }
+}
+
 
 postDeleteProduct = (req, res, next) => {
   console.log("Admin delete product");
@@ -172,8 +239,10 @@ module.exports = {
   getProducts,
   getCategories,
   getAdminProduct,
+  getAdminCategory,
   addProduct,
   addCategory,
   postEditProduct,
+  postEditCategory,
   postDeleteProduct,
 }

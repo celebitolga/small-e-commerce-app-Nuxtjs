@@ -1,5 +1,8 @@
 <template>
-  <AdminCategories :categories="categories"/>
+    <div class="row">
+      <div v-if="action === 'edit' && action !== null" class="alert alert-success">The product has been updated</div>
+      <AdminCategories :categories="categories" :updatedId="updatedId"/>
+    </div>
 </template>
 
 <script>
@@ -10,6 +13,14 @@ export default {
     return {
       categories: [],
     }
+  },
+  computed: {
+    action() {
+      return this.$route.params.action ? this.$route.params.action : null;
+    },
+    updatedId() {
+      return this.$route.params.id ? this.$route.params.id : null;
+    },
   },
   components: {
     AdminCategories,

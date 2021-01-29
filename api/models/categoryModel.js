@@ -25,4 +25,32 @@ module.exports = class Category {
       .then(result => result)
       .catch(err => console.log(err))
   }
+
+  static findById(_id) {
+    const db = getDb();
+    return db.collection('categories')
+      .findOne({
+        _id: new mongodb.ObjectID(_id)
+      })
+      .then((result) => {
+        return result;
+      })
+  }
+
+  static editCategory(category) {
+    const db = getDb();
+
+    return db.collection('categories')
+      .updateOne({
+        _id: new mongodb.ObjectID(category._id)
+      }, {
+        $set: {
+          name: category.name,
+          description: category.description,
+        }
+      }, false, true)
+      .then((result) => {
+        return result;
+      })
+  }
 }

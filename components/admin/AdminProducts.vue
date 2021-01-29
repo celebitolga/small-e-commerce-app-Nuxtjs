@@ -37,7 +37,7 @@ export default {
     updatedId: {
       type: String,
       required: false,
-    }
+    },
   },
   methods: {
     deleteProduct(product) {

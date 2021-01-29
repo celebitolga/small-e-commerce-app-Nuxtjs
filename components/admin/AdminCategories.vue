@@ -2,17 +2,18 @@
   <table class="table table-bordered">
     <thead>
       <tr>
-        <th style="width: 120px;">Category Name</th>
-        <th style="width: 150px;">Category Description</th>
-        <th style="width: 50px;"></th>
+        <th>Category Name</th>
+        <th>Category Description</th>
+        <th style="width: 133px;"></th>
       </tr>
     </thead>
     <tbody>
       
-      <tr v-for="(category, index) in categories" :key="'category' + index">
+      <tr v-for="(category, index) in categories" :key="'category' + index" :class="{'bg-success': updatedId == category._id}" >
         <td>{{ category.name }}</td>
         <td>{{ category.description }}</td>
         <td>
+          <nuxt-link tag="a" :to="'/admin/edit-category/' + category._id" class="btn btn-warning btn-sm">Edit</nuxt-link>
           <button class="btn btn-danger btn-sm" @click="deleteCategory(category)">Delete</button>
         </td>
       </tr>
@@ -25,6 +26,10 @@ export default {
   props: {
     categories: {
       type: Array,
+      required: false,
+    },
+    updatedId: {
+      type: String,
       required: false,
     },
   },

@@ -1,5 +1,6 @@
 export const state = () => ({
   adminEditProduct: null,
+  adminEditCategory: null,
 })
 
 export const mutations = {
@@ -20,6 +21,14 @@ export const mutations = {
       this.state.products.splice(index, 1, product);
     }
   },
+  setEditedCategory(state, category) {
+    ///????
+    let categories = this.getters.getCategories;
+    let index = categories.findIndex(c => c._id == category._id);
+    if (index > -1) {
+      this.state.categories.splice(index, 1, category);
+    }
+  },
   setDeleteProduct(state, _id) {
     ////??
     let products = this.getters.getProducts;
@@ -33,6 +42,9 @@ export const mutations = {
   },
   setCategories(state, categories) {
     this.state.categories = categories;
+  },
+  setAdminEditCategory(state, category) {
+    state.adminEditCategory = category;
   },
 }
 
@@ -63,6 +75,21 @@ export const actions = {
         }
       });
   },
+  getAdminCategory({ commit }, _categoryId) {
+    return this.$axios.get("/admin/getAdminCategory/" + _categoryId)
+      .then((response) => {
+        //response.data.title
+        console.log(response.data.category);
+        if (response.data.err) {
+          /// Not Found
+          commit("setAdminEditCategory", null);
+        } else {
+          /// Found
+          let category = response.data.category;
+          commit("setAdminEditCategory", category);
+        }
+      });
+  },
   addProduct({ commit }, product) {
     return this.$axios.post('/admin/add-product', { product })
       .then((response) => {
@@ -87,6 +114,16 @@ export const actions = {
         }
       })
   },
+  editCategory({ commit }, category) {
+    return this.$axios.post("/admin/edit-category", { category })
+      .then((response) => {
+        if (response.data.err) {
+          //Nothing happend / Didnt edit
+        } else {
+          commit("setEditedCategory", category)
+        }
+      })
+  },
   deleteProduct({ commit }, _id) {
     return this.$axios.post("/admin/delete-product", { _id })
       .then((response) => {
@@ -102,5 +139,8 @@ export const actions = {
 export const getters = {
   getEditProduct(state) {
     return state.adminEditProduct;
+  },
+  getEditCategory(state) {
+    return state.adminEditCategory;
   },
 }

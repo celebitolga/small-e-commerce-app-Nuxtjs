@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="saveCategory">
+  <form @submit.prevent="whichCategory">
 
     <div class="form-group row">
       <label class="col-sm-2 col-form-label">Category Name</label>
@@ -28,22 +28,17 @@
     <div class="form-group row">
       <div class="col-sm-10 offset-sm-2">
         <input
+          v-if="this.forEditCategory"
           type="submit"
           value="Save Category"
-          class="btn btn-primary mt-3"
-        />
-        <!-- <input
-          v-if="this.forEditProduct"
-          type="submit"
-          value="Save Product"
           class="btn btn-primary mt-3"
         />
         <input
           v-else
           type="submit"
-          value="Add New Product"
+          value="Add New Category"
           class="btn btn-primary mt-3"
-        /> -->
+        />
       </div>
     </div>
   </form>
@@ -51,21 +46,66 @@
 
 <script>
 export default {
-  data() {
-    return {
-      category: {
-        name: '',
-        description: '',
-      }
-    }
+  computed: {
+    category() {
+      return this.forEditCategory
+        ? { ...this.forEditCategory }
+        : {
+            name: "",
+            description: "",
+          };
+    },
+  },
+  props: {
+    forEditCategory: {
+      type: Object,
+      required: false,
+    },
   },
   methods: {
-    saveCategory() {
-      this.$store.dispatch("admin/addCategory", this.category)
-        .then(() => {
-          console.log("CATEGORRYYYYYYYYYYY");
-        })
-    }
+    whichCategory() {
+      if (this.forEditCategory) {
+        // Edit Product
+        this.editCategory();
+      } else {
+        // Add new product
+        this.addCategory();
+      }
+    },
+    addCategory() {
+      // Add new product
+      if (this.valid()) {
+        this.$store.dispatch("admin/addCategory", this.category).then(() => {
+          this.$router.push("/admin/categories");
+        });
+      } else {
+        alert("Don't leave spaces");
+      }
+    },
+    editCategory() {
+      // Edit Product
+      if (this.valid()) {
+        this.$store.dispatch("admin/editCategory", this.category).then(() => {
+          // this.$router.push("/admin/products?action=edit&id="+this.product._id);
+          
+          this.$router.push({
+            name: "admin-categories",
+            params: { action: "edit", id: this.category._id },
+          });
+        });
+      } else {
+        alert("Don't leave spaces");
+      }
+    },
+    valid() {
+      if (
+        this.category.name == "" ||
+        this.category.description == ""
+      ) {
+        return false;
+      }
+      return true;
+    },
   },
 }
 </script>
