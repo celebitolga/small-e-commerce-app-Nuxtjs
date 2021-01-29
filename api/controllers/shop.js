@@ -1,11 +1,11 @@
-const ProductModel = require('../models/productModel');
-const CategoryModel = require('../models/categoryModel');
+const Product = require('../models/Product');
+const Category = require('../models/Category');
 
 
  getIndex = async (req, res, next) => {
   console.log("Get product Index");
-  const products = await ProductModel.findAll().then(products => products)
-  const categories = await CategoryModel.findAll().then(categories => categories)
+  const products = await Product.findAll().then(products => products)
+  const categories = await Category.findAll().then(categories => categories)
   
   res.status(200).json({
     title: 'Shopping',
@@ -16,8 +16,8 @@ const CategoryModel = require('../models/categoryModel');
 
 getProducts = async (req, res, next) => {
   console.log("Get product All");
-  const products = await ProductModel.findAll().then(products => products)
-  const categories = await CategoryModel.findAll().then(categories => categories)
+  const products = await Product.findAll().then(products => products)
+  const categories = await Category.findAll().then(categories => categories)
 
   res.status(200).json({
     title: 'Products',
@@ -30,7 +30,7 @@ getProductById = (req, res, next) => {
   console.log("Get product By Id");
   let _id = req.params._id;
   try {
-    ProductModel.findById(_id)
+    Product.findById(_id)
       .then((product) => {
         if (product != null) {
           res.status(200).json({
@@ -68,9 +68,9 @@ getProductById = (req, res, next) => {
 getProductsByCategory = async (req, res, next) => {
   console.log("Get products By Category");
   let _categoryId = req.params._categoryId;
-  const categories = await CategoryModel.findAll().then(categories => categories)
+  const categories = await Category.findAll().then(categories => categories)
   try {
-    ProductModel.findAllByCategoryId(_categoryId)
+    Product.findAllByCategoryId(_categoryId)
       .then((products) => {
         if (products != null) {
           res.status(200).json({

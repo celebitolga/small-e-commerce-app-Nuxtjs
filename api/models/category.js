@@ -1,51 +1,69 @@
-const categories = [
-  {
-    _id: 1,
-    name: 'Telefon',
-    description: "Telefon kategori ürünleri",
-  },
-  {
-    _id: 2,
-    name: 'Bilgisayar',
-    description: "Bilgisayar kategori ürünleri",
-  },
-  {
-    _id: 3,
-    name: 'Beyaz Eşya',
-    description: "Beyaz Eşya kategori ürünleri",
-  },
-]
+const getDb = require('../database').getDb;
+const mongodb = require('mongodb')
 
 module.exports = class Category {
   constructor(name, description) {
-    this._id = categories.length + 1;
     this.name = name;
     this.description = description;
   }
 
-  saveCategory() {
-    categories.push(this);
+  save() {
+    const db = getDb();
+
+    return db.collection('categories')
+      .insertOne(this)
+      .then((result) => console.log(result))
+      .catch(err => console.log(err))
   }
 
-  static getAllCategories() {
-    return categories;
+  static findAll() {
+    const db = getDb();
+
+    return db.collection('categories')
+      .find({})
+      .toArray()
+      .then(result => result)
+      .catch(err => console.log(err))
   }
 
-  static getCategoryById(_id) {
-    return categories.find(c => c._id === _id);
+  static findById(_id) {
+    const db = getDb();
+    return db.collection('categories')
+      .findOne({
+        _id: new mongodb.ObjectID(_id)
+      })
+      .then((result) => {
+        return result;
+      })
   }
 
-  static updateCategory(category) {
-    const index = categories.findIndex(c => c._id === category._id);
-    if (index > -1) {
-      categories.splice(index, 1, category)
-    }
+  static editCategory(category) {
+    const db = getDb();
+
+    return db.collection('categories')
+      .updateOne({
+        _id: new mongodb.ObjectID(category._id)
+      }, {
+        $set: {
+          name: category.name,
+          description: category.description,
+        }
+      }, false, true)
+      .then((result) => {
+        return result;
+      })
   }
+
 
   static deleteCategoryById(_id) {
-    const index = categories.findIndex(c => c._id === _id);
-    if (index > -1) {
-      categories.splice(index, 1)
-    }
+    const db = getDb();
+
+    return db.collection('categories')
+      .deleteOne({
+        _id: new mongodb.ObjectID(_id)
+      })
+      .then(() => {
+        return true;
+      })
   }
 }

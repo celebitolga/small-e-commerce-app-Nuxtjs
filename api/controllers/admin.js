@@ -1,10 +1,10 @@
-const ProductModel = require('../models/productModel');
-const CategoryModel = require('../models/categoryModel');
+const Product = require('../models/product');
+const Category = require('../models/category');
 
 
 getProducts = (req, res, next) => {
   console.log("Admin get products");
-  ProductModel.findAll()
+  Product.findAll()
     .then((products) => {
       res.status(200).json({
         title: 'Admin Products',
@@ -15,7 +15,7 @@ getProducts = (req, res, next) => {
 
 getCategories = (req, res, next) => {
   console.log("Admin get categories");
-  CategoryModel.findAll()
+  Category.findAll()
     .then((categories) => {
       res.status(200).json({
         title: 'Admin Categories',
@@ -28,7 +28,7 @@ getAdminProduct = (req, res, next) => {
   console.log("Get Admin product By Id");
   let _id = req.params._id;
   try {
-    ProductModel.findById(_id)
+    Product.findById(_id)
       .then((product) => {
         if (product != null) {
           res.status(200).json({
@@ -54,7 +54,7 @@ getAdminCategory = (req, res, next) => {
   console.log("Get Admin category By Id");
   let _id = req.params._id;
   try {
-    CategoryModel.findById(_id)
+    Category.findById(_id)
       .then((category) => {
         if (category != null) {
           res.status(200).json({
@@ -78,7 +78,7 @@ getAdminCategory = (req, res, next) => {
 
 addProduct = (req, res, next) => {
   console.log("Admin new product");
-  const product = new ProductModel(
+  const product = new Product(
     req.body.product.name,
     req.body.product.price,
     req.body.product.imageUrl,
@@ -98,7 +98,7 @@ addProduct = (req, res, next) => {
 
 addCategory = (req, res, next) => {
   console.log("Admin new category");
-  const category = new CategoryModel(
+  const category = new Category(
     req.body.category.name,
     req.body.category.description,
   );
@@ -127,7 +127,7 @@ postEditProduct = (req, res, next) => {
         categories: req.body.product.categories,
         _userId: req.user._id,
       }
-      ProductModel.editProduct(product)
+      Product.editProduct(product)
         .then((result) => {
           if (result != null) {
             res.status(200).json({
@@ -167,7 +167,7 @@ postEditCategory = (req, res, next) => {
         name: req.body.category.name,
         description: req.body.category.description,
       }
-      CategoryModel.editCategory(category)
+      Category.editCategory(category)
         .then((result) => {
           if (result != null) {
             res.status(200).json({
@@ -197,14 +197,13 @@ postEditCategory = (req, res, next) => {
   }
 }
 
-
 postDeleteProduct = (req, res, next) => {
   console.log("Admin delete product");
 
   if (req.body._id) {
     try {
       //Query if has product, it will delete product
-      ProductModel.deleteProductById(req.body._id)
+      Product.deleteProductById(req.body._id)
         .then((result) => {
           if (result) {
             res.status(200).json({
@@ -240,7 +239,7 @@ postDeleteCategory = (req, res, next) => {
   if (req.body._id) {
     try {
       //Query if has product, it will delete product
-      CategoryModel.deleteCategoryById(req.body._id)
+      Category.deleteCategoryById(req.body._id)
         .then((result) => {
           if (result) {
             res.status(200).json({
