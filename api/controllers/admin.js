@@ -1,5 +1,5 @@
-const Product = require('../models/product');
 const ProductModel = require('../models/productModel');
+
 
 getProducts = (req, res, next) => {
   console.log("Admin getaa products");
@@ -10,8 +10,8 @@ getProducts = (req, res, next) => {
         products,
       })
     })
-  
 }
+
 
 getAdminProduct = (req, res, next) => {
   console.log("Get Admin product By Id");
@@ -37,22 +37,8 @@ getAdminProduct = (req, res, next) => {
       err: "Not Found",
     })
   }
-  
-  // let product = Product.getProduct(_id);
-  // if (product) {
-  //   res.status(200).json({
-  //     title: 'Product Detail',
-  //     product: {
-  //       ...product
-  //     }
-  //   })
-  // } else {
-  //   console.log('BAD Request');
-  //   res.status(200).json({
-  //     err: "Not Found",
-  //   })
-  // }
 }
+
 
 addProduct = (req, res, next) => {
   console.log("Admin new product");
@@ -73,16 +59,28 @@ addProduct = (req, res, next) => {
     })
 }
 
+
+
 postEditProduct = (req, res, next) => {
   console.log("Admin edit product");
   if (req.body.product) {
-    //Query if has product, it will update product
-    let isSucceed = Product.editProduct(req.body.product);
-    if (isSucceed) {
-      res.status(200).json({
-        message: "Edit Successful",
-      })
-    } else {
+    try {
+      //Query if has product, it will update product
+      ProductModel.editProduct(req.body.product)
+        .then((result) => {
+          if (result != null) {
+            res.status(200).json({
+              message: "Edit Successful",
+            })
+          } else {
+            /// Fail...
+            console.log('BAD Request');
+            res.status(200).json({
+              err: "Not Found",
+            })
+          }
+        })
+    } catch (error) {
       /// Fail...
       console.log('BAD Request');
       res.status(200).json({
@@ -99,25 +97,37 @@ postEditProduct = (req, res, next) => {
 }
 
 
+
 postDeleteProduct = (req, res, next) => {
   console.log("Admin delete product");
+
   if (req.body._id) {
-    //Query if has product, it will delete product
-    let isSucceed = Product.DeleteProductById(req.body._id);
-    if (isSucceed) {
-      res.status(200).json({
-        message: "Delete Successful",
-      })
-    } else {
+    try {
+      //Query if has product, it will delete product
+      ProductModel.deleteProductById(req.body._id)
+        .then((result) => {
+          if (result) {
+            res.status(200).json({
+              message: "Delete Successful",
+            })
+          } else {
+            /// Fail...
+            console.log('BAD Delete Request');
+            res.status(200).json({
+              err: "Not Found",
+            })
+          }
+        })
+    } catch (error) {
       /// Fail...
-      console.log('BAD Request');
+      console.log('BAD Delete Request');
       res.status(200).json({
         err: "Not Found",
       })
     }
   } else {
     /// Fail...
-    console.log('BAD Request');
+    console.log('BAD Delete Request');
     res.status(200).json({
       err: "Not Found",
     })

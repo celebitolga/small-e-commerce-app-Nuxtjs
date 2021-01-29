@@ -71,10 +71,10 @@ export const actions = {
   deleteProduct({ commit }, _id) {
     return this.$axios.post("/admin/delete-product", { _id })
       .then((response) => {
-        if (response.data.err) {
-          //Nothing happend / Didnt delete
-        } else {
+        if (!response.data.err) {
           commit("setDeleteProduct", _id)
+        } else {
+          //Nothing happend / Didnt delete
         }
       })
   },

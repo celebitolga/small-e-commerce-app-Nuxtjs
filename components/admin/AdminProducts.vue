@@ -35,7 +35,7 @@ export default {
       required: false,
     },
     updatedId: {
-      type: Number,
+      type: String,
       required: false,
     }
   },

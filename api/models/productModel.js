@@ -2,7 +2,7 @@ const getDb = require('../database').getDb;
 const mongodb = require('mongodb')
 
 module.exports = class ProductModel {
-  constructor(name, price, imageUrl, description , _categoryId) {
+  constructor(name, price, imageUrl, description, _categoryId) {
     this.name = name;
     this.price = price;
     this.imageUrl = imageUrl;
@@ -13,7 +13,7 @@ module.exports = class ProductModel {
   save() {
     const db = getDb();
 
-  return db.collection('products')
+    return db.collection('products')
       .insertOne(this)
       .then((result) => {
         //console.log(result);
@@ -27,6 +27,10 @@ module.exports = class ProductModel {
     const db = getDb();
     return db.collection('products')
       .find({})
+      // .project({ name: 1, price: 1, imageUrl: 1 })
+      .project({
+        description: 0
+      })
       .toArray()
       .then((products) => {
         return products;
@@ -35,6 +39,22 @@ module.exports = class ProductModel {
         console.log(err);
       })
   }
+
+  static findAllByCategory(_categoryId) {
+    const db = getDb();
+    return db.collection('products')
+      .find({
+        _categoryId: +_categoryId
+      })
+      .toArray()
+      .then((products) => {
+        return products;
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  }
+
 
   static findById(_id) {
     const db = getDb();
@@ -55,6 +75,36 @@ module.exports = class ProductModel {
       })
       .then((result) => {
         return result;
+      })
+  }
+
+  static editProduct(product) {
+    const db = getDb();
+
+    return db.collection('products')
+      .updateOne({
+        _id: new mongodb.ObjectID(product._id)
+      }, {
+        $set: {
+          name: product.name,
+          price: product.price,
+          imageUrl: product.imageUrl,
+          description: product.description,
+          _categoryId: product._categoryId
+        }
+      })
+      .then((result) => {
+        return result;
+      })
+  }
+
+  static deleteProductById(_id) {
+    const db = getDb();
+
+    return db.collection('products')
+      .deleteOne({ _id: new mongodb.ObjectID(_id) })
+      .then(() => {
+        return true;
       })
   }
 }

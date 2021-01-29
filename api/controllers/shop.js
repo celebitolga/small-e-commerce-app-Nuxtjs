@@ -71,20 +71,43 @@ getProductById = (req, res, next) => {
 getProductsByCategory = (req, res, next) => {
   console.log("Get products By Category");
   let _categoryId = req.params._categoryId;
-  const products = Product.getProductByCategoryId(_categoryId);
   const categories = Category.getAllCategories();
-  if (products) {
-    res.status(200).json({
-      title: 'Product Category',
-      products,
-      categories,
-    })
-  } else {
+  try {
+    ProductModel.findAllByCategory(_categoryId)
+      .then((products) => {
+        if (products != null) {
+          res.status(200).json({
+            title: 'Product Category',
+            products,
+            categories,
+          })
+        } else {
+          console.log('BAD Request');
+          res.status(200).json({
+            err: "Not Found",
+          })
+        }
+      })
+  } catch (error) {
     console.log('BAD Request');
     res.status(200).json({
       err: "Not Found",
     })
   }
+  
+  // const products = Product.findAllByCategory(_categoryId);
+  // if (products) {
+  //   res.status(200).json({
+  //     title: 'Product Category',
+  //     products,
+  //     categories,
+  //   })
+  // } else {
+  //   console.log('BAD Request');
+  //   res.status(200).json({
+  //     err: "Not Found",
+  //   })
+  // }
 }
 
 
