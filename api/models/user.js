@@ -49,11 +49,15 @@ module.exports = class User {
 
   getCart() {
     const ids = this.cart.items.map(i => i.productId);
-    
+
     const db = getDb();
 
     return db.collection('products')
-      .find({ _id: { $in: ids } })
+      .find({
+        _id: {
+          $in: ids
+        }
+      })
       .toArray()
       .then((products) => {
         return products.map(p => {
@@ -104,14 +108,70 @@ module.exports = class User {
       .updateOne({
         _id: new mongodb.ObjectID(this._id)
       }, {
-          $set: {
-          cart: { items: cartItems }
+        $set: {
+          cart: {
+            items: cartItems
+          }
         }
       })
       .then((result) => {
         return result;
       })
       .catch(err => console.log(err))
+
+  }
+
+  addOrder() {
+    // get cart
+
+    // create order object
+
+    // save order
+
+    // update card
+
+    const db = getDb();
+
+    return this.getCart()
+      .then((products) => {
+        const order = {
+          items: products.map(item => {
+            return {
+              _id: item._id,
+              name: item.name,
+              price: item.price,
+              imageUrl: item.imageUrl,
+              _userId: item._userId,
+              quantity: item.quantity,
+            }
+          }),
+          user: {
+            _id: mongodb.ObjectID(this._id),
+            name: this.name,
+            email: this.email,
+          },
+          date: new Date().toLocaleString(),
+        }
+        return db.collection("orders").insertOne(order);
+      })
+      .then(() => {
+        this.cart = {
+          items: []
+        };
+        return db.collection('users')
+          .updateOne({
+            _id: new mongodb.ObjectID(this._id)
+          }, {
+            $set: {
+              cart: {
+                items: []
+              }
+            }
+          })
+      })
+  }
+
+  getOrders() {
 
   }
 }

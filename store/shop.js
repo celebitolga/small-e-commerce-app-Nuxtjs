@@ -23,6 +23,9 @@ export const mutations = {
       state.cart.splice(index, 1);
     }
   },
+  setCartToEmpty(state) {
+    state.cart = [];
+  },
 }
 
 export const actions = {
@@ -73,6 +76,14 @@ export const actions = {
       .then((response) => {
         if (!response.data.err) {
           commit("setDeletedCart", productId);
+        }
+      })
+  },
+  postOrders({ commit }) {
+    return this.$axios.post("/orders")
+      .then((response) => {
+        if (!response.data.err) {
+          commit("setCartToEmpty");
         }
       })
   },

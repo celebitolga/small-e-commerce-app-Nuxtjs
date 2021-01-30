@@ -81,7 +81,6 @@ getProductsByCategory = async (req, res, next) => {
   }
 }
 
-
 getProductDetails = (req, res, next) => {
   console.log("Get product Details");
   res.status(200).json({
@@ -138,6 +137,23 @@ deleteCartItem = (req, res, next) => {
     })
 }
 
+postOrders = (req, res, next) => {
+  console.log("Post orders");
+  req.user.addOrder()
+    .then((result) => {
+      if (result) {
+        res.status(200).json({
+          message: "Order Succeed",
+        })
+      } else {
+        res.status(200).json({
+          err: "Not Found",
+        })
+      }
+    })
+    .catch(err => console.log(err))
+}
+
 module.exports = {
   getIndex,
   getProducts,
@@ -148,4 +164,5 @@ module.exports = {
   getCart,
   postAddCart,
   deleteCartItem,
+  postOrders,
 }
