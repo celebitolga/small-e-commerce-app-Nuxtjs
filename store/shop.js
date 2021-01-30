@@ -1,6 +1,7 @@
 export const state = () => ({
   product: null,
   categorizedProducts: [],
+  cart: [],
 })
 
 export const mutations = {
@@ -12,6 +13,15 @@ export const mutations = {
   },
   setCategories(state, categories) {
     this.state.categories = categories;
+  },
+  setCart(state, cart) {
+    state.cart = cart;
+  },
+  setDeletedCart(state, productId) {
+    let index = state.cart.findIndex(c => c._id == productId)
+    if (index > -1) {
+      state.cart.splice(index, 1);
+    }
   },
 }
 
@@ -45,6 +55,27 @@ export const actions = {
         commit("setCategories", response.data.categories);
       })
   },
+  getCart({ commit }) {
+    return this.$axios.get("/cart")
+      .then((response) => {
+        commit("setCart", response.data.products)
+      })
+  },
+  postAddToCart({ commit }, productId) {
+    this.$axios.post("/cart", { productId })
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch(err => console.log(err))
+  },
+  deleteCartItem({ commit }, productId) {
+    return this.$axios.post("/delete-cart-item", { productId })
+      .then((response) => {
+        if (!response.data.err) {
+          commit("setDeletedCart", productId);
+        }
+      })
+  },
 }
 
 export const getters = {
@@ -54,4 +85,7 @@ export const getters = {
   getCategorizedProducts(state) {
     return state.categorizedProducts;
   },
+  getCart(state) {
+    return state.cart;
+  }
 }

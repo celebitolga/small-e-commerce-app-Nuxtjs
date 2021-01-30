@@ -1,8 +1,9 @@
 const Product = require('../models/Product');
 const Category = require('../models/Category');
+const { postEditCategory } = require('./admin');
 
 
- getIndex = async (req, res, next) => {
+getIndex = async (req, res, next) => {
   console.log("Get product Index");
   const products = await Product.findAll().then(products => products)
   const categories = await Category.findAll().then(categories => categories)
@@ -50,19 +51,6 @@ getProductById = (req, res, next) => {
       err: "Not Found",
     })
   }
-  
-  // const product = Product.getProduct(_id);
-  // if (product) {
-  //   res.status(200).json({
-  //     title: 'Product Detail',
-  //     product : {...product}
-  //   })
-  // } else {
-  //   console.log('BAD Request');
-  //   res.status(200).json({
-  //     err: "Not Found",
-  //   })
-  // }
 }
 
 getProductsByCategory = async (req, res, next) => {
@@ -101,27 +89,63 @@ getProductDetails = (req, res, next) => {
   })
 }
 
-getCart = (req, res, next) => {
-  console.log("Get product Cart");
-  res.status(200).json({
-    title: 'Cart',
-  })
-}
-
 getOrders = (req, res, next) => {
   console.log("Get product Orders");
-  res.status(200).json({
-    title: 'Orders',
-  })
 }
 
+getCart = (req, res, next) => {
+  console.log("Get product Cart");
+
+  req.user.getCart()
+    .then((products) => {
+      res.status(200).json({
+        title: 'User Cart',
+        products
+      })
+    })
+    .catch(err => console.log(err))
+}
+
+postAddCart = (req, res, next) => {
+  console.log("Post add Cart");
+
+  const productId = req.body.productId;
+  Product.findById(productId)
+    .then((product) => {
+      return req.user.addToCart(product)
+    })
+    .then(() => {
+      ///
+    })
+    .catch(err => console.log(err))
+}
+
+deleteCartItem = (req, res, next) => {
+  console.log("Delete cart item");
+  req.user.deleteCartItem(req.body.productId)
+    .then((result) => {
+      if (result) {
+        res.status(200).json({
+          message: "Delete Successful",
+        })
+      } else {
+        /// Fail...
+        console.log('BAD Delete Request');
+        res.status(200).json({
+          err: "Not Found",
+        })
+      }
+    })
+}
 
 module.exports = {
   getIndex,
   getProducts,
   getProductDetails,
-  getCart,
-  getOrders,
   getProductById,
   getProductsByCategory,
+  getOrders,
+  getCart,
+  postAddCart,
+  deleteCartItem,
 }

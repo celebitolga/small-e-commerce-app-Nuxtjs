@@ -11,7 +11,7 @@
         <small class="text-muted"> {{product.price}} TL</small>
       </div>
       <div class="card-footer text-center">
-        <button class="btn btn-outline-primary btn-sm"> Add to Cart </button>
+        <button @click="addToCart" class="btn btn-outline-primary btn-sm"> Add to Cart </button>
         <nuxt-link tag="a" :to="'/products/'+product._id" class="btn btn-outline-primary btn-sm"> Details </nuxt-link>
       </div>
     </div>
@@ -20,7 +20,17 @@
 
 <script>
 export default {
-  props: ["product"],
+  props: {
+    product: {
+      type: Object,
+      required: true,
+    },
+  },
+  methods: {
+    addToCart() {
+      this.$store.dispatch("shop/postAddToCart", this.product._id)
+    }
+  },
 };
 </script>
 

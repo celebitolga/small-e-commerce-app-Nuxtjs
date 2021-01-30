@@ -12,7 +12,7 @@ const User = require('./models/user');
 app.use((req, res, next) => {
   User.findByUsername('tolga')
     .then((user) => {
-      req.user = new User(user.name, user.email, user._id);
+      req.user = new User(user.name, user.email, user.cart, user._id);
       next();
     })
     .catch(err => console.log(err))
