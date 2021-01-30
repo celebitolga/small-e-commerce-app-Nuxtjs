@@ -4,7 +4,11 @@ const Category = require('../models/category');
 
 getProducts = (req, res, next) => {
   console.log("Admin get products");
-  Product.findAll()
+  // Product.findAll()
+  Product.find()
+    // .limit(10)
+    // .sort({ name: 1 }) // -1 tersi
+    // .select({ name: 1, price: 1 })
     .then((products) => {
       res.status(200).json({
         title: 'Admin Products',
@@ -15,7 +19,7 @@ getProducts = (req, res, next) => {
 
 getCategories = (req, res, next) => {
   console.log("Admin get categories");
-  Category.findAll()
+  Category.find()
     .then((categories) => {
       res.status(200).json({
         title: 'Admin Categories',
@@ -78,14 +82,22 @@ getAdminCategory = (req, res, next) => {
 
 addProduct = (req, res, next) => {
   console.log("Admin new product");
-  const product = new Product(
+
+  /*const product = new Product(
     req.body.product.name,
     req.body.product.price,
     req.body.product.imageUrl,
     req.body.product.description,
     req.body.product.categories,
     req.user._id,
-  );
+  );*/
+
+  const product = new Product({
+    name: req.body.product.name,
+    price: req.body.product.price,
+    imageUrl: req.body.product.imageUrl,
+    description: req.body.product.description
+  });
 
   product.save()
     .then(() => {

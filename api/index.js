@@ -1,14 +1,23 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
-
-//Mongo db
-const mongoConnect = require('./database').mongoConnect;
-
 app.use(bodyParser.json())
 
-const User = require('./models/user');
+//Mongo db
+// const mongoConnect = require('./database').mongoConnect;
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/test', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log('Connected to mongodb');
+  })
+  .catch(err => console.log(err))
 
+
+const User = require('./models/user');
+/*
 app.use((req, res, next) => {
   User.findByUsername('tolga')
     .then((user) => {
@@ -17,6 +26,7 @@ app.use((req, res, next) => {
     })
     .catch(err => console.log(err))
 })
+*/
 
 //require routes
 const adminRoutes = require('./routes/admin');
@@ -32,6 +42,8 @@ app.get('*', (req, res) => {
   res.status(404);
 })
 
+
+/*
 mongoConnect((client) => {
   User.findByUsername('tolga')
     .then((user) => {
@@ -48,5 +60,7 @@ mongoConnect((client) => {
       console.log(err);
     })
 })
+*/
+
 
 module.exports = app;

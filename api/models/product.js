@@ -1,3 +1,25 @@
+import mongoose from 'mongoose';
+const { Schema } = mongoose;
+
+const productSchema = Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  price: {
+    type: Number,
+    required: true,
+  },
+  description: String,
+  imageUrl: String,
+  date: {
+    type: Date,
+    default: Date.now,
+  },
+})
+
+module.exports = mongoose.models.Product || mongoose.model('Product', productSchema);
+/*
 const getDb = require('../database').getDb;
 const mongodb = require('mongodb')
 
@@ -111,3 +133,4 @@ module.exports = class Product {
       })
   }
 }
+*/
