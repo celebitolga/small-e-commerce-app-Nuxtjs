@@ -89,7 +89,18 @@ getProductDetails = (req, res, next) => {
 }
 
 getOrders = (req, res, next) => {
-  console.log("Get product Orders");
+  console.log("Get user Orders");
+
+  req.user.getOrders()
+    .then((result) => {
+      if (result) {
+        res.status(200).json({
+          title: "Orders",
+          orders: result,
+        })
+      }
+    })
+    .catch(err => console.log(err));
 }
 
 getCart = (req, res, next) => {

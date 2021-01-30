@@ -172,6 +172,12 @@ module.exports = class User {
   }
 
   getOrders() {
-
+    const db = getDb();
+    console.log("sa");
+    return db.collection("orders")
+      .find({ 'user._id': new mongodb.ObjectID(this._id) })
+      .toArray()
+      .then(result => result[0])
+      .catch(err => console.log(err))
   }
 }

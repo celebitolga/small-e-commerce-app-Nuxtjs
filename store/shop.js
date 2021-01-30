@@ -2,6 +2,7 @@ export const state = () => ({
   product: null,
   categorizedProducts: [],
   cart: [],
+  orders: [],
 })
 
 export const mutations = {
@@ -25,6 +26,9 @@ export const mutations = {
   },
   setCartToEmpty(state) {
     state.cart = [];
+  },
+  setOrders(state, orders) {
+    state.orders = orders;
   },
 }
 
@@ -87,6 +91,14 @@ export const actions = {
         }
       })
   },
+  getOrders({ commit }) {
+    return this.$axios.get("/orders")
+      .then((response) => {
+        if (response.data.orders) {
+          commit("setOrders", response.data.orders);
+        }
+      })
+  },
 }
 
 export const getters = {
@@ -98,5 +110,8 @@ export const getters = {
   },
   getCart(state) {
     return state.cart;
-  }
+  },
+  getOrders(state) {
+    return state.orders;
+  },
 }
