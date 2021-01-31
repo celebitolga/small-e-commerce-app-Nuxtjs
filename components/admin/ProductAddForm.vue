@@ -134,7 +134,6 @@ export default {
       // Add new product
       // let product = {...this.product, categories: this.selectedCategories };
       let product = {...this.product };
-      console.log(product);
       if (this.valid(product)) {
         this.$store.dispatch("admin/addProduct", product).then(() => {
           this.$router.push("/");
@@ -147,7 +146,6 @@ export default {
       // Edit Product
       // let product = {...this.product, categories: this.selectedCategories };
       let product = {...this.product };
-      console.log(product);
       if (this.valid(product)) {
         this.$store.dispatch("admin/editProduct", product).then(() => {
           // this.$router.push("/admin/products?action=edit&id="+this.product._id);

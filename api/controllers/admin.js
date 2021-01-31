@@ -235,7 +235,8 @@ postDeleteProduct = (req, res, next) => {
   if (req.body._id) {
     try {
       //Query if has product, it will delete product
-      Product.deleteProductById(req.body._id)
+      Product.deleteOne({ _id: req.body._id })
+      // Product.findByIdAndRemove(req.body._id)
         .then((result) => {
           if (result) {
             res.status(200).json({
