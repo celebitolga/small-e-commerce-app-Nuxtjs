@@ -109,10 +109,10 @@ export default {
   },
   created () {
     let categories = [];
-    if(this.product.categories.length > 0) {
-      categories = [...this.product.categories]
-      this.selectedCategories = categories.map(c => c);
-    }
+    // if(this.product.categories.length > 0) {
+    //   categories = [...this.product.categories]
+    //   this.selectedCategories = categories.map(c => c);
+    // }
   },
   props: {
     forEditProduct: {
@@ -132,7 +132,8 @@ export default {
     },
     addProduct() {
       // Add new product
-      let product = {...this.product, categories: this.selectedCategories };
+      // let product = {...this.product, categories: this.selectedCategories };
+      let product = {...this.product };
       console.log(product);
       if (this.valid(product)) {
         this.$store.dispatch("admin/addProduct", product).then(() => {
@@ -144,7 +145,8 @@ export default {
     },
     editProduct() {
       // Edit Product
-      let product = {...this.product, categories: this.selectedCategories };
+      // let product = {...this.product, categories: this.selectedCategories };
+      let product = {...this.product };
       console.log(product);
       if (this.valid(product)) {
         this.$store.dispatch("admin/editProduct", product).then(() => {
@@ -163,8 +165,9 @@ export default {
         product.name == "" ||
         product.price <= 0 ||
         product.imageUrl == "" ||
-        product.description == "" ||
-        product.categories.length == 0
+        product.description == "" 
+        // ||
+        // product.categories.length == 0
       ) {
         return false;
       }

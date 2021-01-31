@@ -127,19 +127,39 @@ addCategory = (req, res, next) => {
 postEditProduct = (req, res, next) => {
   console.log("Admin edit product");
   if (req.body.product) {
-    console.log();
     try {
       //Query if has product, it will update product
-      const product = {
-        _id: req.body.product._id,
-        name: req.body.product.name,
-        price: req.body.product.price,
-        imageUrl: req.body.product.imageUrl,
-        description: req.body.product.description,
-        categories: req.body.product.categories,
-        _userId: req.user._id,
-      }
-      Product.editProduct(product)
+      // const product = {
+      //   _id: req.body.product._id,
+      //   name: req.body.product.name,
+      //   price: req.body.product.price,
+      //   imageUrl: req.body.product.imageUrl,
+      //   description: req.body.product.description,
+      //   categories: req.body.product.categories,
+      //   _userId: req.user._id,
+      // }
+
+      // query first
+      // update first
+
+      const _id = req.body.product._id;
+      // Product.findById(_id)
+      //   .then((product) => {
+      //     product.name = req.body.product.name;
+      //     product.price = req.body.product.price;
+      //     product.imageUrl = req.body.product.imageUrl;
+      //     product.description = req.body.product.description;
+
+      //     return product.save();
+      //   })
+      Product.updateOne({ _id }, {
+        $set: {
+          name: req.body.product.name,
+          price: req.body.product.price,
+          imageUrl: req.body.product.imageUrl,
+          description: req.body.product.description,
+        }
+      })
         .then((result) => {
           if (result != null) {
             res.status(200).json({
