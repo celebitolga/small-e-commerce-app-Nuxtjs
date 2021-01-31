@@ -1,3 +1,36 @@
+const mongoose = require('mongoose');
+const { Schema } = mongoose;
+
+const userSchema = Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+  },
+  cart: {
+    items: [
+      {
+        productId: {
+          type: mongoose.Schema.Types.ObjectId,
+          required: true,
+        },
+        quantity: {
+          type: Number,
+          required: true,
+        }
+      }
+    ]
+  }
+})
+
+
+module.exports = mongoose.models.User || mongoose.model('User', userSchema);
+
+
+/*
 const getDb = require('../database').getDb;
 const mongodb = require('mongodb');
 
@@ -180,3 +213,4 @@ module.exports = class User {
       .catch(err => console.log(err))
   }
 }
+*/
