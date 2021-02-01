@@ -37,15 +37,15 @@ export const mutations = {
 }
 
 export const actions = {
-  getProducts({ commit }) {
-    return this.$axios.get("/products")
+  async getProducts({ commit }) {
+    return await this.$axios.get("/products")
       .then((response) => {
       //response.data.title
       commit('setProducts', response.data.products)
     });
   },
-  getProduct({ commit }, _productId) {
-    return this.$axios.get("/products/" + _productId)
+  async getProduct({ commit }, _productId) {
+    return await this.$axios.get("/products/" + _productId)
       .then((response) => {
         //response.data.title
         if (response.data.err) {
@@ -58,8 +58,8 @@ export const actions = {
         }
       });
   },
-  getProductsByCategory({ commit }, _categoryId) {
-    return this.$axios.get("/categories/" + _categoryId)
+  async getProductsByCategory({ commit }, _categoryId) {
+    return await this.$axios.get("/categories/" + _categoryId)
       .then((response) => {
         commit("setCategorizedProducts", response.data.products);
         commit("setCategories", response.data.categories);
@@ -78,8 +78,8 @@ export const actions = {
       })
       .catch(err => console.log(err))
   },
-  deleteCartItem({ commit }, productId) {
-    return this.$axios.post("/delete-cart-item", { productId })
+  async deleteCartItem({ commit }, productId) {
+    return await this.$axios.post("/delete-cart-item", { productId })
       .then((response) => {
         if (!response.data.err) {
           commit("setDeletedCart", productId);
@@ -94,8 +94,8 @@ export const actions = {
         }
       })
   },
-  getOrders({ commit }) {
-    return this.$axios.get("/orders")
+  async getOrders({ commit }) {
+    return await this.$axios.get("/orders")
       .then((response) => {
         if (response.data.orders) {
           commit("setOrders", response.data.orders);

@@ -15,13 +15,16 @@ export default {
   data() {
     return {
       loading: true,
-      orders: [],
+    }
+  },
+  computed: {
+    orders() {
+      return this.$store.getters["shop/getOrders"];
     }
   },
   created () {
     this.$store.dispatch("shop/getOrders")
       .then(() => {
-        this.orders = this.$store.getters["shop/getOrders"]
         this.loading = false;
       })
   },

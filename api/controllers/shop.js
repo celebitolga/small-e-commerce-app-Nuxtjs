@@ -109,12 +109,13 @@ getProductDetails = (req, res, next) => {
 getOrders = (req, res, next) => {
   console.log("Get user Orders");
 
-  req.user.getOrders()
-    .then((result) => {
-      if (result) {
+  Order.find({'user.userId': req.user._id})
+    .then((orders) => {
+      console.log(orders);
+      if (orders) {
         res.status(200).json({
           title: "Orders",
-          orders: result,
+          orders,
         })
       }
     })

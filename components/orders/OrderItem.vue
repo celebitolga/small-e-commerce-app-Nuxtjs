@@ -1,10 +1,10 @@
 <template>
   <tr>
     <td>
-      <img :src="order.imageUrl" :alt="order.name" width="80">
+      <img :src="order.product.imageUrl" :alt="order.product.name" width="80">
     </td>
-    <td> {{order.name}} </td>
-    <td> {{order.price}} TL</td>
+    <td> {{order.product.name}} </td>
+    <td> {{order.product.price}} TL</td>
     <td> {{order.quantity}} </td>
     <td>
       <button class="btn btn-warning btn-sm">İptal</button>
