@@ -5,15 +5,16 @@
         <th style="width: 100px;">Image</th>
         <th>Product Name</th>
         <th style="width: 150px;">Price</th>
+        <th style="width: 150px;">Username</th>
         <th style="width: 133px;"></th>
       </tr>
     </thead>
     <tbody>
-      
       <tr v-for="(product, index) in products" :key="'product' + index" :class="{'bg-success': updatedId == product._id}">
         <td><img :src="product.imageUrl" style="width: 80px" /></td>
         <td>{{ product.name }}</td>
         <td>{{ product.price }} TL</td>
+        <td>{{ product.userId.name}} </td>
         <td>
           <nuxt-link
             tag="a"
