@@ -156,14 +156,13 @@ postEditProduct = (req, res, next) => {
       //     return product.save();
       //   })
       const _id = req.body.product._id;
-      Product.updateOne({
-          _id
-        }, {
+      Product.updateOne({ _id }, {
           $set: {
             name: req.body.product.name,
             price: req.body.product.price,
             imageUrl: req.body.product.imageUrl,
             description: req.body.product.description,
+            categories: req.body.product.categories,
           }
         })
         .then((result) => {

@@ -1,7 +1,7 @@
 <template>
     <div class="row">
-      <div v-if="action === 'edit' && action !== null" class="alert alert-success">The product has been updated</div>
-      <div v-if="deletedCategory !== null" class="alert alert-danger">The product ({{deletedCategory}}) has been deleted</div>
+      <div v-if="action === 'edit' && action !== null" class="alert alert-success">The category has been updated</div>
+      <div v-if="deletedCategory !== null" class="alert alert-danger">The category ({{deletedCategory}}) has been deleted</div>
 
       <AdminCategories :categories="categories" :updatedId="updatedId" @deletedSucceed="deletedCategory = $event"/>
     </div>
