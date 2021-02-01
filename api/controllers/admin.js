@@ -96,7 +96,9 @@ addProduct = (req, res, next) => {
     name: req.body.product.name,
     price: req.body.product.price,
     imageUrl: req.body.product.imageUrl,
-    description: req.body.product.description
+    description: req.body.product.description,
+    userId: req.user,
+    // userId: req.user._id,
   });
 
   product.save()
@@ -142,7 +144,7 @@ postEditProduct = (req, res, next) => {
       // query first
       // update first
 
-      const _id = req.body.product._id;
+      // const _id = req.body.product._id;
       // Product.findById(_id)
       //   .then((product) => {
       //     product.name = req.body.product.name;
@@ -152,6 +154,7 @@ postEditProduct = (req, res, next) => {
 
       //     return product.save();
       //   })
+      const _id = req.body.product._id;
       Product.updateOne({ _id }, {
         $set: {
           name: req.body.product.name,
