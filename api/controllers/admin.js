@@ -12,7 +12,6 @@ getProducts = (req, res, next) => {
     // .sort({ name: 1 }) // -1 tersi
     // .select({ name: 1, price: 1 })
     .then((products) => {
-      console.log(products);
       res.status(200).json({
         title: 'Admin Products',
         products,

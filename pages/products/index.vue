@@ -8,26 +8,13 @@
 import Products from "@/components/products/Products";
 
 export default {
-  data() {
-    return {
-      products: [],
+  computed: {
+    products() {
+      return this.$store.getters["shop/getProducts"];
     }
   },
-  created () {
-    this.products = this.$store.getters.getProducts;
-  },
-  fetch({store}) {
-    return new Promise((resolve, reject) => {
-      store.dispatch("shop/getProducts")
-        .then(() => {
-          // console.log("Products index.vue");
-        })
-        resolve();
-
-        reject(new Error());
-    }).catch((e) => {
-      console.log(e);
-    })
+  async fetch({store}) {
+    await store.dispatch("shop/getProducts")
   },
   components: {
     Products,

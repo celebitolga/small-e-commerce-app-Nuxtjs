@@ -1,4 +1,5 @@
 export const state = () => ({
+  products: [],
   product: null,
   categorizedProducts: [],
   cart: [],
@@ -6,6 +7,9 @@ export const state = () => ({
 })
 
 export const mutations = {
+  setProducts(state, products) {
+    state.products = products;
+  },
   setProduct(state, product) {
     state.product = product;
   },
@@ -37,8 +41,7 @@ export const actions = {
     return this.$axios.get("/products")
       .then((response) => {
       //response.data.title
-      //console.log(response.data);
-      //commit('setProducts', response.data.products)
+      commit('setProducts', response.data.products)
     });
   },
   getProduct({ commit }, _productId) {
@@ -102,6 +105,9 @@ export const actions = {
 }
 
 export const getters = {
+  getProducts(state) {
+    return state.products;
+  },
   getProduct(state) {
     return state.product;
   },
