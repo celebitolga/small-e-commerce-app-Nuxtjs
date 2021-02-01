@@ -13,13 +13,13 @@ export default {
   head: {
     title: 'Ana Sayfa | Alışverişin Adresi',
   },
-  data() {
-    return {
-      products: [],
+  computed: {
+    products() {
+      return this.$store.getters.getProducts
     }
   },
-  created() {
-    this.products = this.$store.getters.getProducts;
+  async fetch({store}) {
+    await store.dispatch("getProducts")
   },
   components: {
     Carousel,

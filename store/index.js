@@ -13,12 +13,11 @@ export const mutations = {
 }
 
 export const actions = {
-  nuxtServerInit({ commit }, context) {
-    return context.$axios.get("/").then((response) => {
-      //response.data.title
-      commit('setProducts',response.data.products)
-      commit('setCategories',response.data.categories)
-    });
+  getProducts({ commit }) {
+    return this.$axios.get("/").then((response) => {
+      commit('setProducts', response.data.products)
+      commit('setCategories', response.data.categories)
+    })
   },
 }
 
