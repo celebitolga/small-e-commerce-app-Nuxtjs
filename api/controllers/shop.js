@@ -121,16 +121,28 @@ getOrders = (req, res, next) => {
 }
 
 getCart = (req, res, next) => {
-  console.log("Get product Cart");
+  console.log("Get user Cart");
 
-  req.user.getCart()
-    .then((products) => {
+  //////Second way
+  req.user.populate('cart.items.productId')
+    .execPopulate()
+    .then((user) => {
       res.status(200).json({
         title: 'User Cart',
-        products
+        products: user.cart.items,
       })
     })
     .catch(err => console.log(err))
+
+  ///////First way
+  // req.user.getCart()
+  //   .then((products) => {
+  //     res.status(200).json({
+  //       title: 'User Cart',
+  //       products,
+  //     })
+  //   })
+  //   .catch(err => console.log(err))
 }
 
 postAddCart = (req, res, next) => {

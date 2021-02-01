@@ -10,7 +10,7 @@
         <nuxt-link tag="a" to="/" class="btn btn-link p-0 mb-3">Telefon</nuxt-link>
         <div class="mb-3">
           <h4 class="text-primary mb-3">Price: {{ product.price }} TL</h4>
-          <button type="submit" class="btn btn-primary btn-lg">Add to Cart</button>
+          <button @click="addToCart" class="btn btn-primary btn-lg">Add to Cart</button>
         </div>
       </div>
     </div>
@@ -31,6 +31,11 @@ export default {
       type: Object,
       required: true,
     },
+  },
+  methods: {
+    addToCart() {
+      this.$store.dispatch("shop/postAddToCart", this.product._id)
+    }
   },
 };
 </script>

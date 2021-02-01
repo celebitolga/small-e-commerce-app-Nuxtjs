@@ -1,3 +1,4 @@
+const Product = require('./product')
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
@@ -25,7 +26,47 @@ const userSchema = Schema({
       }
     ]
   }
-})
+});
+
+userSchema.methods.addToCart = function (product) {
+  const index = this.cart.items.findIndex(cp => cp.productId.toString() === product._id.toString())
+  const updatedCartItems = [...this.cart.items];
+  let itemQuantity = 1;
+
+  if (index > -1) { // Cart'a zaten eklenmek istenen product var: quantity'i arttır
+    itemQuantity = this.cart.items[index].quantity + 1;
+    updatedCartItems[index].quantity = itemQuantity;
+  } else {
+    // updatedCartItems'a yeni bir elemen ekle
+    updatedCartItems.push({
+      productId: product._id,
+      quantity: itemQuantity,
+    })
+  }
+
+  this.cart = {
+    items: updatedCartItems,
+  }
+  
+  return this.save();
+}
+
+userSchema.methods.getCart = function () {
+  const ids = this.cart.items.map(i => i.productId);
+
+  return Product.find({ _id: { $in: ids } })
+    .select('name price imageUrl')
+    .then((products) => {
+      return products.map(p => {
+        return {
+          name: p.name,
+          price: p.price,
+          imageUrl: p.imageUrl,
+          quantity: this.cart.items.find(i => i.productId.toString() === p._id.toString()).quantity
+        }
+      })
+    })
+}
 
 
 module.exports = mongoose.models.User || mongoose.model('User', userSchema);

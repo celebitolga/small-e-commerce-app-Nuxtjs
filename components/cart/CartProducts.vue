@@ -42,7 +42,8 @@ export default {
     total() {
       let t = 0;
       this.products.forEach((product) => {
-        t += product.price * product.quantity;
+        //// aldığımız veri yapısını değiştirdğimiz çin productId olarak aldık
+        t += product.productId.price * product.quantity;
       })
       return t;
     }

@@ -1,10 +1,11 @@
 <template>
   <tr>
+    <!-- Data yapıcı değiştirdiğimiz için product.productId olarak yüklüyoruz -->
     <td>
-      <img :src="product.imageUrl" :alt="product.name" width="80">
+      <img :src="product.productId.imageUrl" :alt="product.name" width="80">
     </td>
-    <td> {{product.name}} </td>
-    <td> {{product.price}} TL</td>
+    <td> {{product.productId.name}} </td>
+    <td> {{product.productId.price}} TL</td>
     <td> {{product.quantity}} </td>
     <td>
       <button @click="deleteCartItem" class="btn btn-danger btn-sm">Delete</button>
