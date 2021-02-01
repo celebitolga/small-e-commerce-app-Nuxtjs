@@ -19,6 +19,11 @@ export const actions = {
       commit('setCategories', response.data.categories)
     })
   },
+  getCategories({ commit }) {
+    return this.$axios.get("/categories").then((response) => {
+      commit('setCategories', response.data.categories)
+    })
+  },
 }
 
 export const getters = {

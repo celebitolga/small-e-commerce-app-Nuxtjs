@@ -30,9 +30,9 @@ export default {
     updatedId() {
       return this.$route.params.id ? this.$route.params.id : null;
     },
-    // deleteProductName() {
-    //   return this.$route.params.name ? this.$route.params.name : null;
-    // },
+    deleteProductName() {
+      return this.$route.params.name ? this.$route.params.name : null;
+    },
   },
   async fetch({store}) {
     await store.dispatch("admin/getAdminProducts")

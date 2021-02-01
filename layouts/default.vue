@@ -17,13 +17,13 @@
 
 <script>
 export default {
-  data() {
-    return {
-      categories: [],
+  computed: {
+    categories() {
+      return this.$store.getters.getCategories
     }
   },
-  created() {
-    this.categories = this.$store.getters.getCategories;
+  async fetch({store}) {
+    await store.dispatch("getCategories")
   },
 };
 </script>

@@ -15,6 +15,9 @@
 <script>
 import Products from '@/components/products/Products';
 export default {
+  head: {
+    title: 'Categorized Products',
+  },
   data() {
     return {
       products: [],

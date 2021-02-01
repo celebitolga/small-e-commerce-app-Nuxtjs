@@ -27,6 +27,16 @@ getProducts = async (req, res, next) => {
   })
 }
 
+getCategories = async (req, res, next) => {
+  console.log("Get categories All");
+  const categories = await Category.find().then(categories => categories)
+
+  res.status(200).json({
+    title: 'Categories',
+    categories,
+  })
+}
+
 getProductById = (req, res, next) => {
   console.log("Get product By Id");
   if (mongoose.Types.ObjectId.isValid(req.params._id)) {
@@ -64,7 +74,7 @@ getProductById = (req, res, next) => {
 
 getProductsByCategory = async (req, res, next) => {
   console.log("Get products By Category");
-  let _categoryId = req.body._categoryId;
+  let _categoryId = req.params._categoryId;
   const categories = await Category.find().then(categories => categories)
   const products = await Product.find({categories: _categoryId}).then(products => products)
   try {
@@ -176,6 +186,7 @@ postOrders = (req, res, next) => {
 module.exports = {
   getIndex,
   getProducts,
+  getCategories,
   getProductDetails,
   getProductById,
   getProductsByCategory,
