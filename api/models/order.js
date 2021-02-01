@@ -47,4 +47,4 @@ const orderchema = Schema({
   }
 })
 
-module.exports = mongoose.models.Order || mongoose.model('Order', categorySchema);
+module.exports = mongoose.models.Order || mongoose.model('Order', orderchema);

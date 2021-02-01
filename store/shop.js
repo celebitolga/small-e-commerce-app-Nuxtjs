@@ -86,8 +86,8 @@ export const actions = {
         }
       })
   },
-  postOrders({ commit }) {
-    return this.$axios.post("/orders")
+  async postOrders({ commit }) {
+    return await this.$axios.post("/orders")
       .then((response) => {
         if (!response.data.err) {
           commit("setCartToEmpty");

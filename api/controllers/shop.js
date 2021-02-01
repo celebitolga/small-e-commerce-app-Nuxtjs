@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Product = require('../models/Product');
 const Category = require('../models/Category');
+const Order = require('../models/order');
 
 
 getIndex = async (req, res, next) => {
@@ -182,17 +183,37 @@ deleteCartItem = (req, res, next) => {
 
 postOrders = (req, res, next) => {
   console.log("Post orders");
-  req.user.addOrder()
-    .then((result) => {
-      if (result) {
-        res.status(200).json({
-          message: "Order Succeed",
+  req.user.populate('cart.items.productId')
+    .execPopulate()
+    .then((user) => {
+      const order = new Order({
+        user: {
+          userId: req.user._id,
+          name: req.user.name,
+          email: req.user.email,
+        },
+        items: user.cart.items.map(p => {
+          return {
+            product: {
+              _id: p.productId._id,
+              name: p.productId.name,
+              price: p.productId.price,
+              imageUrl: p.productId.imageUrl,
+            },
+            quantity: p.quantity,
+          }
         })
-      } else {
-        res.status(200).json({
-          err: "Not Found",
-        })
-      }
+      })
+      return order.save();
+    })
+    .then(() => {
+      //Clear cart
+      return req.user.clearCart();
+    })
+    .then(() => {
+      res.status(200).json({
+        message: "Orders Successful",
+      })
     })
     .catch(err => console.log(err))
 }
