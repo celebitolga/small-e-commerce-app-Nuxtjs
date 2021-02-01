@@ -1,4 +1,5 @@
 export const state = () => ({
+  adminProducts: [],
   adminEditProduct: null,
   adminEditCategory: null,
 })
@@ -30,7 +31,7 @@ export const mutations = {
     }
   },
   setProducts(state, products) {
-    this.state.products = products;
+    state.adminProducts = products;
   },
   setCategories(state, categories) {
     this.state.categories = categories;
@@ -53,6 +54,9 @@ export const mutations = {
     if (index > -1) {
       this.state.categories.splice(index, 1);
     }
+  },
+  clearAdminProducts(state) {
+    state.adminProducts = [];
   },
 }
 
@@ -151,9 +155,15 @@ export const actions = {
         }
       })
   },
+  clearAdminProducts({ commit }) {
+    commit("clearAdminProducts");
+  },
 }
 
 export const getters = {
+  getAdminProducts(state) {
+    return state.adminProducts;
+  }, 
   getEditProduct(state) {
     return state.adminEditProduct;
   },

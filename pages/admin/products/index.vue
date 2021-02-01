@@ -17,11 +17,13 @@ export default {
   layout: 'addProduct',
   data() {
     return {
-      products: [],
       deletedProduct: null,
     }
   },
   computed: {
+    products() {
+      return this.$store.getters["admin/getAdminProducts"]
+    },
     action() {
       return this.$route.params.action ? this.$route.params.action : null;
     },
@@ -32,27 +34,17 @@ export default {
     //   return this.$route.params.name ? this.$route.params.name : null;
     // },
   },
-  created () {
-    this.products = this.$store.getters.getProducts;
-  },
-  fetch({store}) {
-    return new Promise((resolve, reject) => {
-      store.dispatch("admin/getAdminProducts")
-        .then(() => {
-          // console.log("Products index.vue");
-        })
-        resolve();
-
-        reject(new Error());
-    }).catch((e) => {
-      console.log(e);
-    })
+  async fetch({store}) {
+    await store.dispatch("admin/getAdminProducts")
   },
   components: {
     AdminProducts,
   },
   head: {
     title: "Admin Products",
+  },
+  async beforeDestroy () {
+   await this.$store.dispatch("admin/clearAdminProducts");
   },
 }
 </script>
