@@ -23,7 +23,7 @@ export const mutations = {
     state.cart = cart;
   },
   setDeletedCart(state, productId) {
-    let index = state.cart.findIndex(c => c._id == productId)
+    let index = state.cart.findIndex(c => c.productId._id == productId)
     if (index > -1) {
       state.cart.splice(index, 1);
     }
@@ -65,16 +65,16 @@ export const actions = {
         commit("setCategories", response.data.categories);
       })
   },
-  getCart({ commit }) {
-    return this.$axios.get("/cart")
+  async getCart({ commit }) {
+    return await this.$axios.get("/cart")
       .then((response) => {
         commit("setCart", response.data.products)
       })
   },
-  postAddToCart({ commit }, productId) {
-    this.$axios.post("/cart", { productId })
+  async postAddToCart({ commit }, productId) {
+    return await this.$axios.post("/cart", { productId })
       .then((response) => {
-        console.log(response.data);
+        
       })
       .catch(err => console.log(err))
   },

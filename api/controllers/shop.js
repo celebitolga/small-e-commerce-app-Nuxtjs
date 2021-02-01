@@ -154,7 +154,10 @@ postAddCart = (req, res, next) => {
       return req.user.addToCart(product)
     })
     .then(() => {
-      ///
+      res.status(200).json({
+        title: "Orders",
+        message: 'Add to cart succeed',
+      })
     })
     .catch(err => console.log(err))
 }

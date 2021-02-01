@@ -10,7 +10,7 @@
         <nuxt-link tag="a" to="/" class="btn btn-link p-0 mb-3">Telefon</nuxt-link>
         <div class="mb-3">
           <h4 class="text-primary mb-3">Price: {{ product.price }} TL</h4>
-          <button @click="addToCart" class="btn btn-primary btn-lg">Add to Cart</button>
+          <button @click="addToCart" class="btn btn-primary btn-lg" :disabled="clicked">Add to Cart</button>
         </div>
       </div>
     </div>
@@ -26,6 +26,11 @@
 
 <script>
 export default {
+  data() {
+    return {
+      clicked: false,
+    }
+  },
   props: {
     product: {
       type: Object,
@@ -34,7 +39,10 @@ export default {
   },
   methods: {
     addToCart() {
+      this.clicked = true;
+
       this.$store.dispatch("shop/postAddToCart", this.product._id)
+        .then(() => this.clicked = false);
     }
   },
 };

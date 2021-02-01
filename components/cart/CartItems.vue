@@ -23,7 +23,7 @@ export default {
   },
   methods: {
     deleteCartItem() {
-      this.$store.dispatch("shop/deleteCartItem", this.product._id)
+      this.$store.dispatch("shop/deleteCartItem", this.product.productId._id)
         .then(() => {
           
         })
