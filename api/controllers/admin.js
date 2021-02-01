@@ -6,7 +6,7 @@ getProducts = (req, res, next) => {
   console.log("Admin get products");
   // Product.findAll()
   Product.find()
-    .populate('userId','name -_id')
+    .populate('userId', 'name -_id')
     .select('name price userId')
     // .limit(10)
     // .sort({ name: 1 }) // -1 tersi
@@ -94,37 +94,36 @@ addProduct = (req, res, next) => {
     req.body.product.categories,
     req.user._id,
   );*/
-
   const product = new Product({
     name: req.body.product.name,
     price: req.body.product.price,
-    imageUrl: req.body.product.imageUrl,
     description: req.body.product.description,
+    imageUrl: req.body.product.imageUrl,
+    categories: req.body.product.categories,
     userId: req.user,
     // userId: req.user._id,
   });
-
   product.save()
-    .then(() => {
+    .then((result) => {
       res.status(200).json({
         message: "Product Registration Successful",
-        product,
+        product: result,
       })
     })
 }
 
 addCategory = (req, res, next) => {
   console.log("Admin new category");
-  const category = new Category(
-    req.body.category.name,
-    req.body.category.description,
-  );
+  const category = new Category({
+    name: req.body.category.name,
+    description: req.body.category.description,
+  });
 
   category.save()
     .then((result) => {
       res.status(200).json({
         message: "Category Registration Successful",
-        category,
+        category: result,
       })
     })
 }
@@ -158,14 +157,16 @@ postEditProduct = (req, res, next) => {
       //     return product.save();
       //   })
       const _id = req.body.product._id;
-      Product.updateOne({ _id }, {
-        $set: {
-          name: req.body.product.name,
-          price: req.body.product.price,
-          imageUrl: req.body.product.imageUrl,
-          description: req.body.product.description,
-        }
-      })
+      Product.updateOne({
+          _id
+        }, {
+          $set: {
+            name: req.body.product.name,
+            price: req.body.product.price,
+            imageUrl: req.body.product.imageUrl,
+            description: req.body.product.description,
+          }
+        })
         .then((result) => {
           if (result != null) {
             res.status(200).json({
@@ -205,7 +206,7 @@ postEditCategory = (req, res, next) => {
         name: req.body.category.name,
         description: req.body.category.description,
       }
-      Category.editCategory(category)
+      Category.updateOne({_id: category._id}, { name: category.name, description: category.description })
         .then((result) => {
           if (result != null) {
             res.status(200).json({
@@ -241,8 +242,10 @@ postDeleteProduct = (req, res, next) => {
   if (req.body._id) {
     try {
       //Query if has product, it will delete product
-      Product.deleteOne({ _id: req.body._id })
-      // Product.findByIdAndRemove(req.body._id)
+      Product.deleteOne({
+          _id: req.body._id
+        })
+        // Product.findByIdAndRemove(req.body._id)
         .then((result) => {
           if (result) {
             res.status(200).json({
@@ -272,14 +275,13 @@ postDeleteProduct = (req, res, next) => {
   }
 }
 
-postDeleteCategory = (req, res, next) => {
+postDeleteCategory = async (req, res, next) => {
   console.log("Admin delete category");
 
   if (req.body._id) {
     try {
       //Query if has product, it will delete product
-      Category.deleteCategoryById(req.body._id)
-        .then((result) => {
+      const result = await Category.deleteOne({_id: req.body._id})
           if (result) {
             res.status(200).json({
               message: "Delete Successful",
@@ -291,7 +293,6 @@ postDeleteCategory = (req, res, next) => {
               err: "Not Found",
             })
           }
-        })
     } catch (error) {
       /// Fail...
       console.log('BAD Delete Request');

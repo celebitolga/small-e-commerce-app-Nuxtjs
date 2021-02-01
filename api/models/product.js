@@ -12,6 +12,11 @@ const productSchema = Schema({
   },
   description: String,
   imageUrl: String,
+  categories: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Category',
+    required: true
+  }],
   date: {
     type: Date,
     default: Date.now,

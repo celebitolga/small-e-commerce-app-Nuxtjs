@@ -56,7 +56,7 @@ export const actions = {
       });
   },
   getProductsByCategory({ commit }, _categoryId) {
-    return this.$axios.get("/categories/" + _categoryId)
+    return this.$axios.get("/categories/" + { _categoryId })
       .then((response) => {
         commit("setCategorizedProducts", response.data.products);
         commit("setCategories", response.data.categories);

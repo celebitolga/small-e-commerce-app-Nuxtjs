@@ -109,10 +109,10 @@ export default {
   },
   created () {
     let categories = [];
-    // if(this.product.categories.length > 0) {
-    //   categories = [...this.product.categories]
-    //   this.selectedCategories = categories.map(c => c);
-    // }
+    if(this.product.categories.length > 0) {
+      categories = [...this.product.categories]
+      this.selectedCategories = categories.map(c => c);
+    }
   },
   props: {
     forEditProduct: {
@@ -132,8 +132,8 @@ export default {
     },
     addProduct() {
       // Add new product
-      // let product = {...this.product, categories: this.selectedCategories };
-      let product = {...this.product };
+      // let product = {...this.product };
+      let product = {...this.product, categories: this.selectedCategories };
       if (this.valid(product)) {
         this.$store.dispatch("admin/addProduct", product).then(() => {
           this.$router.push("/");
