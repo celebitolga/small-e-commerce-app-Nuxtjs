@@ -84,16 +84,17 @@ export default {
   },
   methods: {
     whichMethod() {
-      console.log(this.user);
       if(this.forRegister) {
         console.log("Register");
       } else {
-        console.log("Login");
-        //this.login();
+        this.login();
       }
     },
     login() {
-      console.log(this.user);
+      this.$store.dispatch('account/postLogin', this.user)
+        .then((response) => {
+          response ? this.$router.push('/') : this.$router.push('/login')
+        })
     },
     register() {
       
