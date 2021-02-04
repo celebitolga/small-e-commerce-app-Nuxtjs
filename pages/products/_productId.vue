@@ -26,7 +26,6 @@ export default {
     const _productId = this.$route.params.productId;
     this.$store.dispatch("shop/getProduct", _productId)
       .then(() => {
-        // console.log("Products index.vue");
         this.product = this.$store.getters["shop/getProduct"];
         this.loading = false;
       })

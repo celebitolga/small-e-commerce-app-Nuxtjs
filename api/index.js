@@ -52,10 +52,12 @@ app.use((req, res, next) => {
 //require routes
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
+const accountRoutes = require('./routes/account');
 
 //İmport routes
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
+app.use(accountRoutes);
 
 
 app.get('*', (req, res) => {

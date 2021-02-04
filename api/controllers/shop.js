@@ -60,7 +60,7 @@ getProductById = (req, res, next) => {
           }
         })
     } catch (error) {
-      console.log('BAD Request');
+      console.log('BAD Request 2');
       res.status(200).json({
         err: "Not Found",
       })
