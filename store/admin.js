@@ -61,20 +61,20 @@ export const mutations = {
 }
 
 export const actions = {
-  getAdminProducts({ commit }) {
-    return this.$axios.get("/admin/products").then((response) => {
+  async getAdminProducts({ commit }) {
+    return await this.$axios.get("/admin/products").then((response) => {
       //response.data.title
       commit('setProducts', response.data.products)
     });
   },
-  getAdminCategories({ commit }) {
-    return this.$axios.get("/admin/categories").then((response) => {
+  async getAdminCategories({ commit }) {
+    return await this.$axios.get("/admin/categories").then((response) => {
       //response.data.title
       commit('setCategories', response.data.categories)
     });
   },
-  getAdminProduct({ commit }, _productId) {
-    return this.$axios.get("/admin/getAdminProduct/" + _productId)
+  async getAdminProduct({ commit }, _productId) {
+    return await this.$axios.get("/admin/getAdminProduct/" + _productId)
       .then((response) => {
         //response.data.title
         if (response.data.err) {
@@ -87,8 +87,8 @@ export const actions = {
         }
       });
   },
-  getAdminCategory({ commit }, _categoryId) {
-    return this.$axios.get("/admin/getAdminCategory/" + _categoryId)
+  async getAdminCategory({ commit }, _categoryId) {
+    return await this.$axios.get("/admin/getAdminCategory/" + _categoryId)
       .then((response) => {
         //response.data.title
         if (response.data.err) {
@@ -101,22 +101,22 @@ export const actions = {
         }
       });
   },
-  addProduct({ commit }, product) {
-    return this.$axios.post('/admin/add-product', { product })
+  async addProduct({ commit }, product) {
+    return await this.$axios.post('/admin/add-product', { product })
       .then((response) => {
         console.log(response.data.message);
         commit('addProduct', response.data.product);
       })
   },
-  addCategory({ commit}, category) {
-    return this.$axios.post('/admin/add-category', { category })
+  async addCategory({ commit}, category) {
+    return await this.$axios.post('/admin/add-category', { category })
       .then((response) => {
         //console.log(response.data.message);
         commit('addCategory', response.data.category);
       })
   },
-  editProduct({ commit }, product) {
-    return this.$axios.post("/admin/edit-product", { product })
+  async editProduct({ commit }, product) {
+    return await this.$axios.post("/admin/edit-product", { product })
       .then((response) => {
         if (response.data.err) {
           //Nothing happend / Didnt edit
@@ -125,8 +125,8 @@ export const actions = {
         }
       })
   },
-  editCategory({ commit }, category) {
-    return this.$axios.post("/admin/edit-category", { category })
+  async editCategory({ commit }, category) {
+    return await this.$axios.post("/admin/edit-category", { category })
       .then((response) => {
         if (response.data.err) {
           //Nothing happend / Didnt edit
@@ -135,8 +135,8 @@ export const actions = {
         }
       })
   },
-  deleteProduct({ commit }, _id) {
-    return this.$axios.post("/admin/delete-product", { _id })
+  async deleteProduct({ commit }, _id) {
+    return await this.$axios.post("/admin/delete-product", { _id })
       .then((response) => {
         if (!response.data.err) {
           commit("setDeleteProduct", _id)
@@ -145,10 +145,10 @@ export const actions = {
         }
       })
   },
-  deleteCategory({ commit }, _id) {
-    return this.$axios.post("/admin/delete-category", { _id })
+  async deleteCategory({ commit }, _id) {
+    return await this.$axios.post("/admin/delete-category", { _id })
       .then((response) => {
-        if (!response.data.err) {
+        if (!response.data.err) { 
           commit("setDeleteCategory", _id)
         } else {
           //Nothing happend / Didnt delete

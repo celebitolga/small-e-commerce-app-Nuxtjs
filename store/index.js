@@ -13,14 +13,14 @@ export const mutations = {
 }
 
 export const actions = {
-  getProducts({ commit }) {
-    return this.$axios.get("/").then((response) => {
+  async getProducts({ commit }) {
+    return await this.$axios.get("/").then((response) => {
       commit('setProducts', response.data.products)
       commit('setCategories', response.data.categories)
     })
   },
-  getCategories({ commit }) {
-    return this.$axios.get("/categories").then((response) => {
+  async getCategories({ commit }) {
+    return await this.$axios.get("/categories").then((response) => {
       commit('setCategories', response.data.categories)
     })
   },
