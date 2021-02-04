@@ -6,6 +6,8 @@ const Order = require('../models/order');
 
 getIndex = async (req, res, next) => {
   console.log("Get product Index");
+  // console.log(req.cookies.isAuthenticated);
+  console.log(req.session.isAuthenticated);
   const products = await Product.find().then(products => products)
   const categories = await Category.find().then(categories => categories)
 
@@ -13,6 +15,7 @@ getIndex = async (req, res, next) => {
     title: 'Shopping',
     products,
     categories,
+    isAuthenticated: req.session.isAuthenticated,
   })
 }
 

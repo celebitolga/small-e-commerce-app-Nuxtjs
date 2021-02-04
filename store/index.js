@@ -13,6 +13,9 @@ export const mutations = {
 }
 
 export const actions = {
+  async nuxtServerInit() {
+    console.log("Nuxt server init");
+  },
   async getProducts({ commit }) {
     return await this.$axios.get("/").then((response) => {
       commit('setProducts', response.data.products)

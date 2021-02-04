@@ -1,7 +1,20 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const app = express();
-app.use(bodyParser.json())
+
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
+
+app.use(bodyParser.json());
+app.use(cookieParser());
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    maxAge: 3600000
+  },
+}));
 
 //Mongo db
 // const mongoConnect = require('./database').mongoConnect;

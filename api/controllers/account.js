@@ -8,10 +8,14 @@ postLogin = (req, res, next) => {
   const password = req.body.user.password;
 
   if ((email == 'tolga@gmail.com') && (password == '123')) {
+    // res.cookie('isAuthenticated', true);
+    req.session.isAuthenticated = true;
     res.status(200).json({
       redirect: true,
     })
   } else {
+    // res.cookie('isAuthenticated', false);
+    req.session.isAuthenticated = false;
     res.status(203).json({
       redirect: false,
     })
