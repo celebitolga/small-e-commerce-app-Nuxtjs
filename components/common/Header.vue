@@ -59,12 +59,10 @@
 
 <script>
 export default {
-  props: {
-    isAuthenticated: {
-      type: Boolean,
-      default: false,
-      required: false,
-    },
+  computed: {
+    isAuthenticated() {
+      return this.$store.getters.isAuthenticated;
+    }
   },
 };
 </script>
