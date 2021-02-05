@@ -4,6 +4,12 @@ const app = express();
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
+const mongoDbStore = require('connect-mongodb-session')(session);
+
+let store = new mongoDbStore({
+  url: 'mongodb://localhost/test',
+  collection: 'mySessions',
+});
 
 app.use(bodyParser.json());
 app.use(cookieParser());
@@ -12,8 +18,9 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: {
-    maxAge: 3600000
+    maxAge: 10000 ///3600000
   },
+  store, ///////////////mongodbstore
 }));
 
 //Mongo db
