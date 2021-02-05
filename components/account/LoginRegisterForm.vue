@@ -92,8 +92,8 @@ export default {
     },
     login() {
       this.$store.dispatch('account/postLogin', this.user)
-        .then((response) => {
-          response ? this.$router.push('/') : this.$router.push('/login')
+        .then(() => {
+
         })
     },
     register() {

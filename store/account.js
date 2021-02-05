@@ -11,7 +11,12 @@ export const actions = {
   async postLogin({ commit }, user) {
     return await this.$axios.post('/login', { user })
       .then((response) => {
-        return response.data.redirect;
+        if (response.data.redirect) {
+          this.$router.push('/')
+        } else {
+          //// Or return error for user information
+          this.$router.push('/login')
+        }
       })
   },
   async postRegister({ commit }, user) {
