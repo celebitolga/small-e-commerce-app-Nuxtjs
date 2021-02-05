@@ -1,6 +1,4 @@
-getLogin = (req, res, next) => {
-  
-}
+const User = require('../models/user');
 
 postLogin = (req, res, next) => {
   console.log("Post login");
@@ -22,16 +20,33 @@ postLogin = (req, res, next) => {
   }
 }
 
-getRegister = (req, res, next) => {
-
-}
-
 postRegister = (req, res, next) => {
+  const name = req.body.user.name;
+  const email = req.body.user.email;
+  const password = req.body.user.password;
 
-}
-
-getResetPassword = (req, res, next) => {
-
+  User.findOne({ email })
+    .then((user) => {
+      if (user) {
+        return res.status(203).json({
+          err: 'User found, forget password or email?',
+        })
+      } else {
+        const newUser = new User({
+          name,
+          email,
+          password,
+          cart: {
+            items: [],
+          },
+        })
+        newUser.save();
+        res.status(200).json({
+          created: 'User created',
+        })
+      }
+    })
+    .catch(err => console.log(err))
 }
 
 postResetPassword = (req, res, next) => {
@@ -42,10 +57,7 @@ postResetPassword = (req, res, next) => {
 
 
 module.exports = {
-  getLogin,
   postLogin,
-  getRegister,
   postRegister,
-  getResetPassword,
   postResetPassword,
 }

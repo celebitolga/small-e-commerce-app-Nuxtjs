@@ -85,7 +85,7 @@ export default {
   methods: {
     whichMethod() {
       if(this.forRegister) {
-        console.log("Register");
+        this.register()
       } else {
         this.login();
       }
@@ -97,7 +97,10 @@ export default {
         })
     },
     register() {
-      
+      this.$store.dispatch('account/postRegister', this.user)
+        .then(() => {
+
+        })
     }
   },
 }
