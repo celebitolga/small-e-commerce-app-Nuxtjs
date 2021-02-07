@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const bcrypt = require('bcrypt');
 
 postLogin = (req, res, next) => {
   console.log("Post login");
@@ -32,18 +33,20 @@ postRegister = (req, res, next) => {
           err: 'User found, forget password or email?',
         })
       } else {
-        const newUser = new User({
-          name,
-          email,
-          password,
-          cart: {
-            items: [],
-          },
-        })
-        newUser.save();
-        res.status(200).json({
-          created: 'User created',
-        })
+        bcrypt.hash(password, 10, function (err, hash) {
+          const newUser = new User({
+            name,
+            email,
+            password: hash,
+            cart: {
+              items: [],
+            },
+          })
+          newUser.save();
+          res.status(200).json({
+            created: 'User created',
+          })
+        });
       }
     })
     .catch(err => console.log(err))
