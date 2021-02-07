@@ -10,6 +10,7 @@
 <script>
 import AdminCategories from '@/components/admin/AdminCategories';
 export default {
+  middleware: ['session-control','authenticated'],
   layout: 'addProduct',
   data() {
     return {

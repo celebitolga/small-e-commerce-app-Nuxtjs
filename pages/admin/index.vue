@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  middleware: 'authenticated',
+  middleware: ['session-control','authenticated'],
 }
 </script>
 

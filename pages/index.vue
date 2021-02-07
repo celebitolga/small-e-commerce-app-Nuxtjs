@@ -10,7 +10,6 @@ import Carousel from "@/components/common/Carousel";
 import Products from "@/components/products/Products";
 
 export default {
-  middleware: ['session-control','authenticated'],
   head: {
     title: 'Ana Sayfa | Alışverişin Adresi',
   },

@@ -18,6 +18,7 @@
 import ProductAddForm from "@/components/admin/ProductAddForm";
 
 export default {
+  middleware: ['session-control','authenticated'],
   layout: 'addProduct',
   data() {
     return {

@@ -8,7 +8,7 @@ export const mutations = {
 }
 
 export const actions = {
-  async postLogin({ commit }, user) {
+  async postLogin(vuexContext, user) {
     return await this.$axios.post('/login', { user })
       .then((response) => {
         if (response.data.redirect) {

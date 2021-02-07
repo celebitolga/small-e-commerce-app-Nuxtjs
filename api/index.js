@@ -39,11 +39,14 @@ mongoose.connect('mongodb://localhost/test', {
     console.log('Connected to mongodb');
   })
   .catch(err => console.log(err))
-
-
+  
 
 app.use((req, res, next) => {
-  User.findOne({ name: 'tolga'})
+  if (!req.session.user) {
+    return next();
+  }
+
+  User.findById(req.session.user._id)
     .then((user) => {
       req.user = user;
       next();

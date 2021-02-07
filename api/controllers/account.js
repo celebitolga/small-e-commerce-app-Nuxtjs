@@ -6,19 +6,41 @@ postLogin = (req, res, next) => {
   const email = req.body.user.email;
   const password = req.body.user.password;
 
-  if ((email == 'tolga@gmail.com') && (password == '123')) {
-    // res.cookie('isAuthenticated', true);
-    req.session.isAuthenticated = true;
-    res.status(200).json({
-      redirect: true,
+  User.findOne({ email })
+    .then((user) => {
+      if (!user) {
+        res.status(203).json({
+          err: 'User not found',
+        });
+      } else {
+        bcrypt.compare(password, user.password, function (err, result) {
+          if (err) {
+            //Error
+            res.status(203).json({
+              err: 'error',
+              isAuthenticated: req.session.isAuthenticated,
+            });
+          }
+          if (result) {
+            //login 
+            req.session.user = user;
+            req.session.isAuthenticated = true;
+            res.status(200).json({
+              redirect: true,
+              isAuthenticated: req.session.isAuthenticated,
+            })
+          } else {
+            //Wrong password
+            res.status(203).json({
+              err: 'Wrong password',
+              redirect: false,
+              isAuthenticated: req.session.isAuthenticated,
+            });
+          }
+        })
+      }
     })
-  } else {
-    // res.cookie('isAuthenticated', false);
-    req.session.isAuthenticated = false;
-    res.status(203).json({
-      redirect: false,
-    })
-  }
+    .catch(err => console.log(err))
 }
 
 postRegister = (req, res, next) => {
@@ -29,7 +51,7 @@ postRegister = (req, res, next) => {
   User.findOne({ email })
     .then((user) => {
       if (user) {
-        return res.status(203).json({
+        res.status(203).json({
           err: 'User found, forget password or email?',
         })
       } else {

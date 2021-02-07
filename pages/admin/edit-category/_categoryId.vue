@@ -18,6 +18,7 @@
 import CategoryAddForm from "@/components/admin/CategoryAddForm";
 
 export default {
+  middleware: ['session-control','authenticated'],
   layout: 'addProduct',
   data() {
     return {

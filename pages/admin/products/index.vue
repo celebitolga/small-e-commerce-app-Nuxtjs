@@ -14,6 +14,7 @@
 import AdminProducts from '@/components/admin/AdminProducts';
 
 export default {
+  middleware: ['session-control','authenticated'],
   layout: 'addProduct',
   data() {
     return {
